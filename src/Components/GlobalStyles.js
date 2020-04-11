@@ -1,7 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 
-// 전역으로 쓰기 위해 따로 태그 지정 안하고 바로 `` 사용
+// 전역으로 쓰기 위해 미리 지정되어 있는 createGlobalStyle component 시용
 // reset 설정 먼저 가져옴
 const globalStyles = createGlobalStyle`
     ${reset};
