@@ -14,15 +14,15 @@ export default class extends React.Component {
   async componentDidMount() {
     try {
       const{
-        data: { result: topRated }
+        data: { results: topRated }
       } = await tvApi.topRated();
       const{
-        data: { result: popular }
+        data: { results: popular }
       } = await tvApi.popular();
       const{
-        data: { result: airingTday }
+        data: { results: airingToday }
       } = await tvApi.airingToday();
-      this.setState({ topRated, popular, airingTday });
+      this.setState({ topRated, popular, airingToday });
     } catch {
       this.setState({
         error: "Can't find TV information."

@@ -11,6 +11,7 @@ const Container = styled.div`
 `;
 
 const Form = styled.form`
+  margin-top: 10px;
   margin-bottom: 50px;
   width: 100%;
 `;
@@ -66,7 +67,7 @@ const SearchPresenter = ({
                 imageUrl={show.poster_path}
                 title={show.original_name}
                 rating={show.vote_average}
-                year={show.first_air_date.substring(0, 4)}
+                year={show.first_air_date?.substring(0, 4) || '0000'}
               />
             ))}
           </Section>

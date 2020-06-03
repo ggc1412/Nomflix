@@ -5,7 +5,6 @@ import GlobalStyles from "Components/GlobalStyles";
 class App extends Component {
   render() {
     return (
-
       <>
         <Router />
         <GlobalStyles />

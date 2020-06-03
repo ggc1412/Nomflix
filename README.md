@@ -22,7 +22,7 @@ Learning React and ES6 by building a Movie Discovery App. Learning React and ES6
 
 ## Emoji
 
-Start :rocket:
-add component :heavy_plus_sign:
-css :art:
-refactoring :wrench:
+- Start :rocket:
+- add component :heavy_plus_sign:
+- css :art:
+- refactoring :wrench:
