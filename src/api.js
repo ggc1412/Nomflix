@@ -2,10 +2,22 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL: "https://api.themoviedb.org/3/",
-  params: {
-    api_key: "1966f6340925a6e4284eb2602d17c5fa",
-    language: "en-US",
-  }
+});
+
+// 0.19 버젼 이후로 create메서드 안에 params 적용 불가..
+// 따로 설정해야 하는데, default는 왜 안되는지 모르겠다.
+// api.defaults.params = {};
+// api.defaults.params['api_key'] = "1966f6340925a6e4284eb2602d17c5fa";
+// api.defaults.params['language'] = "en-US";
+
+api.interceptors.request.use((config) => {
+  config.params = config.params || {};
+  // create-react로 만든 경우 dotenv 설치 없이 REACT_APP을 변수명 앞에 붙여 사용한다.
+  // 설정 후 재부팅 필요
+  // https://create-react-app.dev/docs/adding-custom-environment-variables/
+  config.params["api_key"] = process.env.REACT_APP_APIKEY;
+  config.params["language"] = "en-US";
+  return config;
 });
 
 export const movieApi = {
