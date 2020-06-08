@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Loader from "Components/Loader";
+import { Helmet } from "react-helmet";
 
 const Container = styled.div`
   height: calc(100vh - 50px);
@@ -67,7 +68,10 @@ const Overview = styled.p`
   width: 50%;
 `;
 
-const DetailPresenter = ({ result, loading, error }) =>
+const DetailPresenter = ({ result, loading, error }) =>(
+  <>
+<Helmet><title>{result.original_title? result.original_title: result.original_name} | Nomflix</title></Helmet>
+{
   loading ? (
     <Loader />
   ) : (
@@ -113,7 +117,9 @@ const DetailPresenter = ({ result, loading, error }) =>
         </Data>
       </Content>
     </Container>
-  );
+  )}
+  </>
+);
 
 DetailPresenter.propTypes = {
     result: PropTypes.object,
