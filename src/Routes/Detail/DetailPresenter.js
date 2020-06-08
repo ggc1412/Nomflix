@@ -69,12 +69,14 @@ const Overview = styled.p`
 `;
 
 const DetailPresenter = ({ result, loading, error }) =>(
-  <>
-<Helmet><title>{result.original_title? result.original_title: result.original_name} | Nomflix</title></Helmet>
-{
-  loading ? (
+  loading ? ( 
+    <>
+    <Helmet><title>Loading | Nomflix</title></Helmet>
     <Loader />
+    </>
   ) : (
+    <>
+    <Helmet><title>{result.original_title?result.original_title:result.original_name} | Nomflix</title></Helmet>
     <Container>
       <Backdrop
         bgImage={`https://image.tmdb.org/t/p/original${result.backdrop_path}`}
@@ -117,8 +119,8 @@ const DetailPresenter = ({ result, loading, error }) =>(
         </Data>
       </Content>
     </Container>
-  )}
-  </>
+    </>
+  )
 );
 
 DetailPresenter.propTypes = {
