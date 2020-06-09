@@ -16,7 +16,7 @@ api.interceptors.request.use((config) => {
   // 설정 후 재부팅 필요
   // https://create-react-app.dev/docs/adding-custom-environment-variables/
   config.params["api_key"] = process.env.REACT_APP_APIKEY;
-  config.params["language"] = "en-US";
+  config.params["language"] = "ko";
   return config;
 });
 
