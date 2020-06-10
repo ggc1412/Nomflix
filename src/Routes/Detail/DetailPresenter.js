@@ -34,12 +34,14 @@ const Content = styled.div`
 `;
 
 const Cover = styled.div`
-  width: 30%;
-  background-image: url(${props => props.bgImage});
-  background-position: center center;
-  background-size: cover;
-  height: 100%;
+  width: 300px;
+  height: 400px;
   border-radius: 5px;
+`;
+
+const CoverImg = styled.img`
+  width: 100%;
+  height: 100%;
 `;
 
 const Data = styled.div`
@@ -65,7 +67,7 @@ const Overview = styled.p`
   font-size: 12px;
   opacity: 0.7;
   line-height: 1.5;
-  width: 50%;
+  width: 100%;
 `;
 
 const DetailPresenter = ({ result, loading, error }) =>(
@@ -82,13 +84,15 @@ const DetailPresenter = ({ result, loading, error }) =>(
         bgImage={`https://image.tmdb.org/t/p/original${result.backdrop_path}`}
       />
       <Content>
-        <Cover
-          bgImage={
-            result.poster_path
-              ? `https://image.tmdb.org/t/p/original${result.poster_path}`
-              : require("../../assets/noPosterSmall.png")
-          }
-        />
+        <Cover>
+          <CoverImg 
+                      src={
+                        result.poster_path
+                          ? `https://image.tmdb.org/t/p/original${result.poster_path}`
+                          : require("../../assets/noPosterSmall.png")
+                      }
+          />
+        </Cover>
         <Data>
           <Title>
             {result.original_title
