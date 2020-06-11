@@ -9,6 +9,8 @@ const Container = styled.div`
   width: 100%;
   position: relative;
   padding: 50px;
+  display: flex;
+  justify-content: center;
 `;
 
 const Backdrop = styled.div`
@@ -28,6 +30,7 @@ const Backdrop = styled.div`
 const Content = styled.div`
   display: flex;
   width: 100%;
+  max-width: 1200px;
   position: relative;
   z-index: 1;
   height: 100%;
@@ -36,7 +39,6 @@ const Content = styled.div`
 const Cover = styled.div`
   width: 300px;
   height: 400px;
-  border-radius: 5px;
 `;
 
 const CoverImg = styled.img`
@@ -46,25 +48,27 @@ const CoverImg = styled.img`
 
 const Data = styled.div`
   width: 70%;
-  margin-left: 10px;
+  margin-left: 25px;
 `;
 
 const Title = styled.h3`
-  font-size: 32px;
+  font-size: 3rem;
 `;
 
 const ItemContainer = styled.div`
   margin: 20px 0;
 `;
 
-const Item = styled.span``;
+const Item = styled.span`
+ font-size: 1rem;
+`;
 
 const Divider = styled.span`
   margin: 0 10px;
 `;
 
 const Overview = styled.p`
-  font-size: 12px;
+  font-size: 1.15rem;
   opacity: 0.7;
   line-height: 1.5;
   width: 100%;
