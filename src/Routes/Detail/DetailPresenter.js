@@ -74,6 +74,28 @@ const Overview = styled.p`
   width: 100%;
 `;
 
+const Videos = styled.div`
+  font-size: 1rem;
+  margin-top: 10px;
+  height: 150px;
+  overflow:auto;
+`;
+
+const VideoWrapper = styled.div`
+  margin-top: 8px;
+`;
+const Video = styled.a``;
+const Emoji = props => (
+  <span
+    className="emoji"
+    role="img"
+    aria-label={props.label ? props.label : ""}
+    aria-hidden={props.label ? "false" : "true"}
+  >
+    {props.symbol}
+  </span>
+)
+
 const DetailPresenter = ({ result, loading, error }) =>(
   loading ? ( 
     <>
@@ -124,6 +146,13 @@ const DetailPresenter = ({ result, loading, error }) =>(
             </Item>
           </ItemContainer>
           <Overview>{result.overview}</Overview>
+          <Videos>{result.videos.results && result.videos.results.map(video =>
+            <VideoWrapper key={video.id}> 
+              <Video href={`https://www.youtube.com/watch?v=FCLNuqMMjAs/${video.key}`} target='_blank'>
+                <Emoji label="video" symbol="🎬"/> {video.name}
+              </Video>
+            </VideoWrapper>)}
+          </Videos>
         </Data>
       </Content>
     </Container>

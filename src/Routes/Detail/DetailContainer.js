@@ -44,6 +44,7 @@ export default class extends React.Component {
         } catch {
             this.setState({ error: "Can't find anything." });
         } finally {
+            console.log(result);
             this.setState({ loading: false, result });
         }
     }
