@@ -38,5 +38,6 @@ Learning React and ES6 by building a Movie Discovery App. Learning React and ES6
 
 - Start :rocket:
 - add component :heavy_plus_sign:
+- add figure :deciduous_tree:
 - css :art:
 - refactoring :wrench:

@@ -51,6 +51,11 @@ const Data = styled.div`
   margin-left: 25px;
 `;
 
+const Production = styled.div`
+  font-size: 0.9rem;
+  margin: 5px 0;
+`;
+
 const Title = styled.h3`
   font-size: 3rem;
 `;
@@ -120,6 +125,11 @@ const DetailPresenter = ({ result, loading, error }) =>(
           />
         </Cover>
         <Data>
+          <Production>{result.production_companies && result.production_companies.map((com, index) => 
+          index === result.production_companies.length -1 ?
+          com.name : `${com.name} • `
+          )}
+          </Production>
           <Title>
             {result.original_title
               ? result.original_title
