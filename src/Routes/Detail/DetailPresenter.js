@@ -56,6 +56,11 @@ const Production = styled.div`
   margin: 5px 0;
 `;
 
+const LogoImg = styled.img`
+  width: 5rem;
+  margin: 5px 10px 5px 0;
+`;
+
 const Title = styled.h3`
   font-size: 3rem;
 `;
@@ -125,9 +130,13 @@ const DetailPresenter = ({ result, loading, error }) =>(
           />
         </Cover>
         <Data>
+        <Production>{result.production_companies && result.production_companies.map((com, index) => 
+                  <LogoImg src={com.logo_path?`https://image.tmdb.org/t/p/w300${com.logo_path}`:require("../../assets/noPosterSmall.png")}
+                  /> 
+          )}
+          </Production>
           <Production>{result.production_companies && result.production_companies.map((com, index) => 
-          index === result.production_companies.length -1 ?
-          com.name : `${com.name} • `
+          index === result.production_companies.length -1 ? com.name : `${com.name} • `
           )}
           </Production>
           <Title>
