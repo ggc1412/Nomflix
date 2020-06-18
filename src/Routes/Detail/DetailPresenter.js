@@ -12,6 +12,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 `;
 
 const Backdrop = styled.div`
@@ -33,8 +34,6 @@ const Content = styled.div`
   width: 100%;
   max-width: 1200px;
   position: relative;
-  z-index: 1;
-  height: 100%;
 `;
 
 const Cover = styled.div`
