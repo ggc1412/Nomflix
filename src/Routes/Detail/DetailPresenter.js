@@ -10,6 +10,7 @@ const Container = styled.div`
   position: relative;
   padding: 50px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
 `;
 
@@ -51,14 +52,64 @@ const Data = styled.div`
   margin-left: 25px;
 `;
 
+const ProductionContainer = styled.div` 
+  margin: 15px 0;  
+  padding: 20px 30px;
+  width: 100%;
+  height: 8rem;
+  display:flex;
+  align-items: center;
+  overflow-x:auto;
+  overflow-y:hidden;
+  font-size: 0.9rem; 
+  background-color:rgba(255, 255, 255, 0.3);
+  border-radius: 3px;  
+`;
+
 const Production = styled.div`
-  font-size: 0.9rem;
-  margin: 5px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 6.5rem;
+  & + & {
+    margin-left: 20px;
+  }
+  color:rgb(0,0,0);
+`;
+
+const LogoWrapper = styled.div`
+  width: 5rem;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const LogoImg = styled.img`
-  width: 5rem;
-  margin: 5px 10px 5px 0;
+  width: 100%;
+  max-height: 3.8rem;
+`;
+
+const ProductionName = styled.div`
+  margin-top: 5px;
+  width: 6.5rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: center;
+
+  &:hover{
+    overflow:visible;
+    white-space: normal;
+    text-align: center;    
+  }
+
+`;
+
+const NoProduction = styled.div`
+font-size: 2rem;
 `;
 
 const Title = styled.h3`
@@ -130,15 +181,6 @@ const DetailPresenter = ({ result, loading, error }) =>(
           />
         </Cover>
         <Data>
-        <Production>{result.production_companies && result.production_companies.map((com, index) => 
-                  <LogoImg src={com.logo_path?`https://image.tmdb.org/t/p/w300${com.logo_path}`:require("../../assets/noPosterSmall.png")}
-                  /> 
-          )}
-          </Production>
-          <Production>{result.production_companies && result.production_companies.map((com, index) => 
-          index === result.production_companies.length -1 ? com.name : `${com.name} • `
-          )}
-          </Production>
           <Title>
             {result.original_title
               ? result.original_title
@@ -173,6 +215,22 @@ const DetailPresenter = ({ result, loading, error }) =>(
             </VideoWrapper>)}
           </Videos>
         </Data>
+      </Content>
+      <Content>  
+        <ProductionContainer>        
+          {result.production_companies && result.production_companies.length > 0 ? result.production_companies.map((com, index) => 
+            <Production key={com.id}>
+              <LogoWrapper>
+                <LogoImg                
+                  src={com.logo_path?`https://image.tmdb.org/t/p/w300${com.logo_path}`:require("../../assets/noProduction.jpg")}
+                />
+              </LogoWrapper>
+              <ProductionName>
+                {com.name}
+              </ProductionName>
+            </Production> 
+          ) : <NoProduction>No Production Data</NoProduction>}
+        </ProductionContainer>
       </Content>
     </Container>
     </>
