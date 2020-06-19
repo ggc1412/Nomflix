@@ -51,6 +51,7 @@ export const tvApi = {
         // 한 번에 movie에 대한 다른 data(ex.예고편, 포스터)를 가져올 수 있다.
       },
     }),
+  showCredits: (id) => api.get(`tv/${id}/credits`),  
   search: (term) =>
     api.get("search/tv", {
       params: {

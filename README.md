@@ -24,6 +24,7 @@ Learning React and ES6 by building a Movie Discovery App. Learning React and ES6
 
 - [x] 한글로 변경
 - [ ] UI 변경
+- [x] 주요 출연진
 - [ ] 배우 정보, 영화사 정보, 감독 정보 추가
 - [x] 관련 영상 추가
 - [ ] 관련 정보 기반으로 추천 영화 리스트
@@ -32,7 +33,7 @@ Learning React and ES6 by building a Movie Discovery App. Learning React and ES6
   - [ ] 포스터 이미지 맞추기
 - [ ] Redux 적용
 - [ ] Hooks 적용
-- [ ] 상세 정보 포스터 이미지 수정 필요
+- [x] 상세 정보 포스터 이미지 수정 필요
 
 ## Emoji
 

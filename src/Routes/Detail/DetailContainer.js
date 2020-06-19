@@ -44,6 +44,7 @@ export default class extends React.Component {
                 ({data: credits} = await movieApi.movieCredits(parsedId));
             }else {
                 ({data: result} = await tvApi.showDetail(parsedId));
+                ({data: credits} = await tvApi.showCredits(parsedId));
             }
         } catch {
             this.setState({ error: "Can't find anything." });

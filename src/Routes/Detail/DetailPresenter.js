@@ -49,6 +49,7 @@ const CoverImg = styled.img`
 
 const Data = styled.div`
   width: 70%;
+  min-width: 600px;
   margin-left: 25px;
 `;
 
@@ -107,6 +108,7 @@ const ProductionContainer = styled.div`
   margin: 15px 0;  
   padding: 20px 30px;
   width: 100%;
+  min-width: 920px;
   display:flex;
   align-items: center;
   overflow-x:auto;
@@ -150,6 +152,9 @@ const ProductionName = styled.div`
   text-overflow: ellipsis;
   text-align: center;
 
+  font-size: 1rem;
+  font-Weight: 500;
+
   &:hover{
     overflow:visible;
     white-space: normal;
@@ -158,13 +163,14 @@ const ProductionName = styled.div`
 `;
 
 const NoProduction = styled.div`
-font-size: 2rem;
+font-size: 1.5rem;
 `;
 
 // Cast Style
 const CastContainer = styled.div` 
   margin: 15px 0;  
   width: 100%;
+  min-width: 920px;
   display:flex;
   align-items: center;
   overflow-x:auto;
@@ -177,7 +183,7 @@ const Cast = styled.div`
   align-items: center;
   justify-content: start;
   background-color:rgba(255, 255, 255, 1);
-  border-radius: 8px 8px 5px 5px;
+  border-radius: 10px 10px 5px 5px;
   width: 8rem;
   height: 16.3rem;
   margin: 0 0 10px 5px;
@@ -266,9 +272,10 @@ const DetailPresenter = ({ result, credits, loading, error }) =>(
         </Cover>
         <Data>
           <Title>
-            {result.original_title
+            {result.title? result.title : 
+            result.original_title
               ? result.original_title
-              : result.original_name}
+              : result.name? result.name : result.original_name}
           </Title>
           <ItemContainer>
             <Item>
@@ -323,7 +330,7 @@ const DetailPresenter = ({ result, credits, loading, error }) =>(
         </ItemTitle>
         <CastContainer>        
           {credits.cast && credits.cast.length > 0 ? credits.cast.map((char, index) => 
-            <Cast key={char.id}>
+            <Cast key={char.credit_id}>
               <ProfileWrapper>
                 <ProfileImg                
                   src={char.profile_path?`https://image.tmdb.org/t/p/w300${char.profile_path}`:require("../../assets/basicProfile.svg")}
