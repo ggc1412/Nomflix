@@ -5,7 +5,6 @@ import Loader from "Components/Loader";
 import { Helmet } from "react-helmet";
 
 const Container = styled.div`
-  height: calc(100vh - 50px);
   width: 100%;
   position: relative;
   padding: 50px;
@@ -34,10 +33,12 @@ const Content = styled.div`
   width: 100%;
   max-width: 1200px;
   position: relative;
+  margin-bottom: 10px;
 `;
 
 const Cover = styled.div`
-  width: 300px;
+  width:300px;
+  min-width: 300px;
   height: 400px;
 `;
 
@@ -51,11 +52,61 @@ const Data = styled.div`
   margin-left: 25px;
 `;
 
+const DetailContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1200px;
+  position: relative;
+`;
+
+const Title = styled.h3`
+  font-size: 3rem;
+`;
+
+const ItemContainer = styled.div`
+  margin: 20px 0;
+`;
+
+const Item = styled.span`
+ font-size: 1rem;
+`;
+
+const Divider = styled.span`
+  margin: 0 10px;
+`;
+
+const Overview = styled.p`
+  font-size: 1.15rem;
+  opacity: 0.7;
+  line-height: 1.5;
+  width: 100%;
+`;
+
+// Video style
+const Videos = styled.div`
+  font-size: 1rem;
+  margin-top: 10px;
+  height: 150px;
+  overflow:auto;
+`;
+
+const VideoWrapper = styled.div`
+  margin-top: 8px;
+`;
+const Video = styled.a``;
+
+const ItemTitle = styled.h2`
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 10px;
+`;
+
+// Production Style
 const ProductionContainer = styled.div` 
   margin: 15px 0;  
   padding: 20px 30px;
   width: 100%;
-  height: 8rem;
   display:flex;
   align-items: center;
   overflow-x:auto;
@@ -104,47 +155,77 @@ const ProductionName = styled.div`
     white-space: normal;
     text-align: center;    
   }
-
 `;
 
 const NoProduction = styled.div`
 font-size: 2rem;
 `;
 
-const Title = styled.h3`
-  font-size: 3rem;
-`;
-
-const ItemContainer = styled.div`
-  margin: 20px 0;
-`;
-
-const Item = styled.span`
- font-size: 1rem;
-`;
-
-const Divider = styled.span`
-  margin: 0 10px;
-`;
-
-const Overview = styled.p`
-  font-size: 1.15rem;
-  opacity: 0.7;
-  line-height: 1.5;
+// Cast Style
+const CastContainer = styled.div` 
+  margin: 15px 0;  
   width: 100%;
+  display:flex;
+  align-items: center;
+  overflow-x:auto;
+  overflow-y:hidden;
+  font-size: 0.9rem; 
+  background-color:rgba(255, 255, 255, 0.3);
+  border-radius: 3px;  
 `;
 
-const Videos = styled.div`
-  font-size: 1rem;
+const Cast = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  background-color:rgba(255, 255, 255, 0.7);
+  border-radius: 3px;
+  width: 8rem;
+  height: 16rem;
+  margin: 10px;
+  color:rgb(0,0,0);
+`;
+
+
+const ProfileWrapper = styled.div`
+  height: 11rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ProfileImg = styled.img`
+  width: 7.5rem;
+  border-radius: 3px 3px 0 0;
+`;
+
+const CastName = styled.div`
   margin-top: 10px;
-  height: 150px;
-  overflow:auto;
+  width: 6.5rem;
+  text-align: left;
+
+  font-size: 1rem;
+  font-weight: bold;
+
+  &:hover{
+    overflow:visible;
+    white-space: normal;    
+  }
 `;
 
-const VideoWrapper = styled.div`
-  margin-top: 8px;
+const CharName = styled.div`
+  margin-bottom: 10px;
+  width: 6.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &:hover{
+    overflow:visible;
+    white-space: normal;   
+  }
 `;
-const Video = styled.a``;
+
 const Emoji = props => (
   <span
     className="emoji"
@@ -156,7 +237,7 @@ const Emoji = props => (
   </span>
 )
 
-const DetailPresenter = ({ result, loading, error }) =>(
+const DetailPresenter = ({ result, credits, loading, error }) =>(
   loading ? ( 
     <>
     <Helmet><title>Loading | Nomflix</title></Helmet>
@@ -215,7 +296,10 @@ const DetailPresenter = ({ result, loading, error }) =>(
           </Videos>
         </Data>
       </Content>
-      <Content>  
+      <DetailContent>
+        <ItemTitle>
+          프로덕션
+        </ItemTitle>  
         <ProductionContainer>        
           {result.production_companies && result.production_companies.length > 0 ? result.production_companies.map((com, index) => 
             <Production key={com.id}>
@@ -230,7 +314,27 @@ const DetailPresenter = ({ result, loading, error }) =>(
             </Production> 
           ) : <NoProduction>No Production Data</NoProduction>}
         </ProductionContainer>
-      </Content>
+        <ItemTitle>
+          주요 출연진
+        </ItemTitle>
+        <CastContainer>        
+          {credits.cast && credits.cast.length > 0 ? credits.cast.map((char, index) => 
+            <Cast key={char.id}>
+              <ProfileWrapper>
+                <ProfileImg                
+                  src={char.profile_path?`https://image.tmdb.org/t/p/w300${char.profile_path}`:require("../../assets/noProduction.jpg")}
+                />
+              </ProfileWrapper>
+              <CastName>
+                {char.name}
+              </CastName>
+              <CharName>
+                {char.character}
+              </CharName>
+            </Cast> 
+          ) : <NoProduction>No Cast Data</NoProduction>}
+        </CastContainer>
+      </DetailContent>
     </Container>
     </>
   )

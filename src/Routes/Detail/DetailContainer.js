@@ -5,6 +5,7 @@ import { movieApi, tvApi } from "../../api";
 export default class extends React.Component {
     state = {
         result: null,
+        credits: null,
         error: null,
         loading: true
     };
@@ -16,6 +17,7 @@ export default class extends React.Component {
         } = props;
         this.state = {
             result: null,
+            credits: null,
             error: null,
             loading: true,
             isMovie: pathname.includes("/movie/")
@@ -35,22 +37,24 @@ export default class extends React.Component {
             return push("/");
         }
         let result = null;
+        let credits = null;
         try {
             if(isMovie){
                 ({data: result} = await movieApi.movieDetail(parsedId));
+                ({data: credits} = await movieApi.movieCredits(parsedId));
             }else {
                 ({data: result} = await tvApi.showDetail(parsedId));
             }
         } catch {
             this.setState({ error: "Can't find anything." });
         } finally {
-            console.log(result);
-            this.setState({ loading: false, result });
+            console.log(credits);
+            this.setState({ loading: false, result, credits});
         }
     }
 
     render() {
-        const { result, error, loading } = this.state;
-        return <DetailPresenter result={result} error={error} loading={loading} />
+        const { result, credits, error, loading } = this.state;
+        return <DetailPresenter result={result} credits={credits} error={error} loading={loading} />
     }
 }
