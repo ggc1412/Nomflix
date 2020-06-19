@@ -169,9 +169,6 @@ const CastContainer = styled.div`
   align-items: center;
   overflow-x:auto;
   overflow-y:hidden;
-  font-size: 0.9rem; 
-  background-color:rgba(255, 255, 255, 0.3);
-  border-radius: 3px;  
 `;
 
 const Cast = styled.div`
@@ -179,25 +176,30 @@ const Cast = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: start;
-  background-color:rgba(255, 255, 255, 0.7);
-  border-radius: 3px;
+  background-color:rgba(255, 255, 255, 1);
+  border-radius: 8px 8px 5px 5px;
   width: 8rem;
-  height: 16rem;
-  margin: 10px;
+  height: 16.3rem;
+  margin: 0 0 10px 5px;
   color:rgb(0,0,0);
-`;
 
+  & + & {
+    margin-left: 10px;
+  }
+`;
 
 const ProfileWrapper = styled.div`
   height: 11rem;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; 
+  background-color: rgb(219,219,219);
+  border-radius: 5px 5px 0 0; 
 `;
 
 const ProfileImg = styled.img`
   width: 7.5rem;
-  border-radius: 3px 3px 0 0;
+  border-radius: 8px 8px 0 0; 
 `;
 
 const CastName = styled.div`
@@ -219,6 +221,8 @@ const CharName = styled.div`
   width: 6.5rem;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  font-size: 0.85rem;
 
   &:hover{
     overflow:visible;
@@ -322,7 +326,7 @@ const DetailPresenter = ({ result, credits, loading, error }) =>(
             <Cast key={char.id}>
               <ProfileWrapper>
                 <ProfileImg                
-                  src={char.profile_path?`https://image.tmdb.org/t/p/w300${char.profile_path}`:require("../../assets/noProduction.jpg")}
+                  src={char.profile_path?`https://image.tmdb.org/t/p/w300${char.profile_path}`:require("../../assets/basicProfile.svg")}
                 />
               </ProfileWrapper>
               <CastName>
