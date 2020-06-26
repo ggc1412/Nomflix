@@ -3,7 +3,8 @@ const { google } = require("googleapis");
 
 const service = google.youtube({
   version: "v3",
-  auth: "AIzaSyDevD4BktAyebPbz0w953v7z1P94tsZsrc",
+  auth: "키교체",
+  // node 내에서만 실행시키면 실행이 된다.
 });
 
 const params = {
