@@ -1,25 +1,24 @@
-//import google from "googleapis";
-const { google } = require("googleapis");
+import axios from "axios";
 
-const service = google.youtube({
-  version: "v3",
-  auth: "키교체",
-  // node 내에서만 실행시키면 실행이 된다.
+const api = axios.create({
+  baseURL: "https://www.googleapis.com/youtube/v3/",
 });
 
-const params = {
-  part: "snippet",
-  q: "scoob",
-  type: "video",
-};
+api.interceptors.request.use((config) => {
+  config.params = config.params || {};
+  config.params["key"] = process.env.REACT_APP_YOUTUBE_APIKEY;
+  config.params["part"] = "snippet";
+  config.params["type"] = "video";
+  config.params["maxResults"] = 10;
+  config.params["regionCode"] = "KR";
+  return config;
+});
 
-const youtubeApi = {
-  search: () => service.search.list(params),
+export const youtubeApi = {
+  search: (term) =>
+    api.get("search", {
+      params: {
+        q: term,
+      },
+    }),
 };
-
-const test = async () => {
-  const result = await youtubeApi.search();
-  console.log(result);
-};
-
-test();
