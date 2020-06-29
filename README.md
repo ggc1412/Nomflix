@@ -28,9 +28,8 @@ Learning React and ES6 by building a Movie Discovery App. Learning React and ES6
 - [ ] 배우 정보, 영화사 정보, 감독 정보 추가
 - [x] 관련 영상 추가
 - [ ] 관련 정보 기반으로 추천 영화 리스트
-- [ ] 유튜브 영화 검색 노출
+- [x] 유튜브 영화 검색 노출
 - [ ] 모바일 최적화
-  - [ ] 포스터 이미지 맞추기
 - [ ] Redux 적용
 - [ ] Hooks 적용
 - [x] 상세 정보 포스터 이미지 수정 필요

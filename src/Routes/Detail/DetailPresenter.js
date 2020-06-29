@@ -193,6 +193,9 @@ const Cast = styled.div`
   & + & {
     margin-left: 10px;
   }
+  &:hover{
+    filter: brightness(0.5);
+  }
 `;
 
 const ProfileWrapper = styled.div`
@@ -253,13 +256,16 @@ const Youtube = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: start;
-  background-color: rgba(0, 0, 0, 0.4);
   min-width: 12.5rem;
   margin-bottom: 6px;
   color: rgb(255, 255, 255);
   border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.8);
   & + & {
     margin-left: 10px;
+  }
+  &:hover{
+    filter: brightness(0.5);
   }
 `;
 
@@ -291,6 +297,17 @@ const YoutubeTitle = styled.div`
 const YoutubeLink = styled.a`
   text-decoration: none;
 `;
+
+const YoutubeMore = styled.div`
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 15px;
+  height: 10.5rem;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.7);
+  margin-left: 5px;
+`;
+
 
 const Emoji = (props) => (
   <span
@@ -446,6 +463,17 @@ const DetailPresenter = ({ result, credits, youtube, loading, error }) =>
                 </YoutubeLink>
               </Youtube>
             ))}
+             <YoutubeLink href={`https://www.youtube.com/results?search_query=${result.title
+                ? result.title
+                : result.original_title
+                ? result.original_title
+                : result.name
+                ? result.name
+                : result.original_name}`} target="_blank">
+               <YoutubeMore>
+                더보기
+               </YoutubeMore>
+            </YoutubeLink>
           </YoutubeContainer>
         </DetailContent>
       </Container>
