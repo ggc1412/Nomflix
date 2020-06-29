@@ -185,6 +185,7 @@ const Cast = styled.div`
   background-color: rgba(255, 255, 255, 1);
   border-radius: 10px 10px 5px 5px;
   width: 8rem;
+  min-width: 8rem;
   height: 16.3rem;
   margin: 0 0 10px 5px;
   color: rgb(0, 0, 0);
@@ -204,8 +205,9 @@ const ProfileWrapper = styled.div`
 `;
 
 const ProfileImg = styled.img`
-  width: 7.5rem;
-  border-radius: 8px 8px 0 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px 5px 0 0;
 `;
 
 const CastName = styled.div`
@@ -251,9 +253,9 @@ const Youtube = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: start;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.4);
   min-width: 12.5rem;
-  margin-bottom: 2px;
+  margin-bottom: 6px;
   color: rgb(255, 255, 255);
   border-radius: 4px;
   & + & {
@@ -440,9 +442,7 @@ const DetailPresenter = ({ result, credits, youtube, loading, error }) =>
                   <ThumnailWrapper>
                     <Thumnail src={item.snippet.thumbnails.medium.url} />
                   </ThumnailWrapper>
-                  <YoutubeTitle>
-                    {decodeURIComponent(item.snippet.title)}
-                  </YoutubeTitle>
+                  <YoutubeTitle>{item.snippet.title}</YoutubeTitle>
                 </YoutubeLink>
               </Youtube>
             ))}
