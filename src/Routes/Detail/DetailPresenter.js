@@ -304,8 +304,11 @@ const YoutubeMore = styled.div`
   padding: 15px;
   height: 10.5rem;
   border-radius: 4px;
-  background-color: rgba(0, 0, 0, 0.7);
+  
   margin-left: 5px;
+  &:hover{
+    background-color: rgba(0, 0, 0, 0.7);
+  }
 `;
 
 
