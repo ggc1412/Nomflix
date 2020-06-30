@@ -311,6 +311,63 @@ const YoutubeMore = styled.div`
   }
 `;
 
+// Similar Style
+const SimilarContainer = styled.div`
+  margin: 15px 0;
+  width: 100%;
+  min-width: 920px;
+  display: flex;
+  align-items: flex-start;
+  overflow-x: auto;
+  overflow-y: hidden;
+`;
+
+const Similar = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  min-width: 12.5rem;
+  margin-bottom: 6px;
+  color: rgb(255, 255, 255);
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.8);
+  & + & {
+    margin-left: 10px;
+  }
+  &:hover{
+    filter: brightness(0.5);
+  }
+`;
+
+const SimilarBackdropWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(219, 219, 219);
+  border-radius: 8px 8px 0 0;
+`;
+
+const SimilarBackdrop = styled.img`
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+`;
+
+const SimilarTitle = styled.div`
+  margin: 8px 6px;
+  line-height: 1.2rem;
+  height: 2.4rem;
+  text-align: left;
+  font-size: 0.9rem;
+  font-weight: bold;
+  overflow: hidden;
+  white-space: normal;
+  text-overflow: ellipsis;
+`;
+
+const SimilarLink = styled.a`
+  text-decoration: none;
+`;
 
 const Emoji = (props) => (
   <span
@@ -323,7 +380,7 @@ const Emoji = (props) => (
   </span>
 );
 
-const DetailPresenter = ({ result, credits, youtube, loading, error }) =>
+const DetailPresenter = ({ result, credits, similar, youtube, loading, error }) =>
   loading ? (
     <>
       <Helmet>
@@ -453,7 +510,7 @@ const DetailPresenter = ({ result, credits, youtube, loading, error }) =>
           </CastContainer>
           <ItemTitle>YOUTUBE</ItemTitle>
           <YoutubeContainer>
-            {youtube.map((item) => (
+            {youtube.map(item => (
               <Youtube key={item.etag}>
                 <YoutubeLink
                   href={`https://www.youtube.com/watch?v=${item.id.videoId}`}
@@ -478,6 +535,19 @@ const DetailPresenter = ({ result, credits, youtube, loading, error }) =>
                </YoutubeMore>
             </YoutubeLink>
           </YoutubeContainer>
+          <ItemTitle>비슷한 작품</ItemTitle>
+          <SimilarContainer>
+            {similar.map(item=>(
+              <Similar key={item.id}>
+                <SimilarLink>
+                  <SimilarBackdropWrapper>
+                    <SimilarBackdrop src={`https://image.tmdb.org/t/p/w300${item.backdrop_path}`}/>
+                  </SimilarBackdropWrapper>
+                  <SimilarTitle>{item.title}</SimilarTitle>
+                </SimilarLink>
+              </Similar>
+            ))}
+          </SimilarContainer>
         </DetailContent>
       </Container>
     </>

@@ -8,6 +8,7 @@ export default class extends React.Component {
   state = {
     result: null,
     credits: null,
+    similar: null,
     youtube: null,
     error: null,
     loading: true,
@@ -21,6 +22,7 @@ export default class extends React.Component {
     this.state = {
       result: null,
       credits: null,
+      similar: null,
       youtube: null,
       error: null,
       loading: true,
@@ -43,21 +45,24 @@ export default class extends React.Component {
     let result = null;
     let credits = null;
     let youtube = null;
+    let similar = null;
     try {
       if (isMovie) {
         ({ data: result } = await movieApi.movieDetail(parsedId));
         ({ data: credits } = await movieApi.movieCredits(parsedId));
-        const title = `movie ${result.original_title}`;
+        ({ data: { results: similar } }= await movieApi.similar(parsedId));
+        const title = `movie ${result.title? result.title : result.original_title}`;
         ({
           data: { items: youtube },
         } = await youtubeApi.search(title));
         youtube.forEach((item) => {
           item.snippet.title = AllHtmlEntities.decode(item.snippet.title);
         });
+        console.log(similar);
       } else {
         ({ data: result } = await tvApi.showDetail(parsedId));
         ({ data: credits } = await tvApi.showCredits(parsedId));
-        const title = `TV show ${result.original_name}`;
+        const title = `${result.name? result.name : result.original_name}`;
         ({
           data: { items: youtube },
         } = await youtubeApi.search(title));
@@ -68,17 +73,18 @@ export default class extends React.Component {
     } catch {
       this.setState({ error: "Can't find anything." });
     } finally {
-      console.log(youtube);
-      this.setState({ loading: false, result, credits, youtube });
+      console.log(result);
+      this.setState({ loading: false, result, credits, similar, youtube });
     }
   }
 
   render() {
-    const { result, credits, youtube, error, loading } = this.state;
+    const { result, credits, similar, youtube, error, loading } = this.state;
     return (
       <DetailPresenter
         result={result}
         credits={credits}
+        similar={similar}
         youtube={youtube}
         error={error}
         loading={loading}
