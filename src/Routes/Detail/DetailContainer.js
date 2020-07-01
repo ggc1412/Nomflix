@@ -79,13 +79,14 @@ export default class extends React.Component {
   }
 
   render() {
-    const { result, credits, similar, youtube, error, loading } = this.state;
+    const { result, credits, similar, youtube, isMovie, error, loading } = this.state;
     return (
       <DetailPresenter
         result={result}
         credits={credits}
         similar={similar}
         youtube={youtube}
+        isMovie={isMovie}
         error={error}
         loading={loading}
       />

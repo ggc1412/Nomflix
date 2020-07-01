@@ -21,7 +21,7 @@ export default () => (
     <Switch>
       {/* 어떤 url에서 어떤 Route를 render할 것인지 알려주고, 
             이 Route에는 어떤 component가 연결되어있는지 설정한다. */}
-      <Route path="/" exact component={Home} />
+      <Route exact path="/" component={Home} />
       <Route path="/tv" component={TV} />
       <Route path="/search" component={Search} />
       <Route path="/movie/:id" component={Detail}/>

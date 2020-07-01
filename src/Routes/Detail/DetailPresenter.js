@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Loader from "Components/Loader";
 import { Helmet } from "react-helmet";
@@ -391,12 +392,6 @@ const SimilarOverview = styled.div`
   color: rgba(255, 255, 255, 0.8);
 `;
 
-
-const SimilarLink = styled.a`
-  text-decoration: none;
-`;
-
-
 const Emoji = (props) => (
   <span
     className="emoji"
@@ -408,7 +403,7 @@ const Emoji = (props) => (
   </span>
 );
 
-const DetailPresenter = ({ result, credits, similar, youtube, loading, error }) =>
+const DetailPresenter = ({ result, credits, similar, youtube, isMovie, loading, error }) =>
   loading ? (
     <>
       <Helmet>
@@ -567,7 +562,7 @@ const DetailPresenter = ({ result, credits, similar, youtube, loading, error }) 
           <SimilarContainer>
             {similar.map(item=>(
               <Similar key={item.id}>
-                <SimilarLink>
+                <Link to={isMovie ? `/movie/${item.id}` : `/show/${item.id}`}>
                   <SimilarBackdropWrapper>
                     <SimilarBackdrop src={`https://image.tmdb.org/t/p/w300${item.backdrop_path}`}/>
                   </SimilarBackdropWrapper>
@@ -585,7 +580,7 @@ const DetailPresenter = ({ result, credits, similar, youtube, loading, error }) 
                       {item.overview}
                     </SimilarOverview>
                   </SimilarItems>
-                </SimilarLink>
+                </Link>
               </Similar>
             ))}
           </SimilarContainer>
@@ -596,6 +591,10 @@ const DetailPresenter = ({ result, credits, similar, youtube, loading, error }) 
 
 DetailPresenter.propTypes = {
   result: PropTypes.object,
+  credits: PropTypes.object,
+  similar: PropTypes.object,
+  youtube: PropTypes.object,
+  isMovie: PropTypes.bool,
   loading: PropTypes.bool.isRequired,
   error: PropTypes.string,
 };
