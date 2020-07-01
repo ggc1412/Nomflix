@@ -100,7 +100,7 @@ const Video = styled.a``;
 const ItemTitle = styled.h2`
   font-size: 1.5rem;
   font-weight: bold;
-  margin-top: 10px;
+  margin-top: 30px;
 `;
 
 // Production Style
@@ -327,7 +327,7 @@ const Similar = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: start;
-  min-width: 12.5rem;
+  min-width: 14rem;
   margin-bottom: 6px;
   color: rgb(255, 255, 255);
   border-radius: 4px;
@@ -365,9 +365,37 @@ const SimilarTitle = styled.div`
   text-overflow: ellipsis;
 `;
 
+const SimilarItem = styled.div`
+  margin-bottom: 10px;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.85rem;
+
+  &:hover {
+    overflow: visible;
+    white-space: normal;
+  }
+`;
+
+const SimilarOverview = styled.div`
+  margin-bottom: 10px;
+  line-height: 1.2rem;
+  height: 3.6rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.85rem;
+
+  &:after{
+    content:'...';
+  }
+`;
+
+
 const SimilarLink = styled.a`
   text-decoration: none;
 `;
+
 
 const Emoji = (props) => (
   <span
@@ -544,6 +572,16 @@ const DetailPresenter = ({ result, credits, similar, youtube, loading, error }) 
                     <SimilarBackdrop src={`https://image.tmdb.org/t/p/w300${item.backdrop_path}`}/>
                   </SimilarBackdropWrapper>
                   <SimilarTitle>{item.title}</SimilarTitle>
+                  <SimilarItem>
+                    {item.release_date}          
+                    <span role="img" aria-label="rating">
+                      ⭐️
+                    </span>{" "}
+                    {item.vote_average}
+                  </SimilarItem>
+                  <SimilarOverview>
+                    {item.overview}
+                  </SimilarOverview>
                 </SimilarLink>
               </Similar>
             ))}

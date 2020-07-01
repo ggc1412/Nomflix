@@ -31,7 +31,7 @@ export const movieApi = {
       },
     }),
   movieCredits: (id) => api.get(`movie/${id}/credits`),
-  similar: (id) => api.get(`movie/${id}/similar`),
+  similar: (id) => api.get(`movie/${id}/recommendations`),
   search: (term) =>
     api.get("search/movie", {
       params: {
