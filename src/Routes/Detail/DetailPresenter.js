@@ -230,6 +230,7 @@ const CastName = styled.div`
 const CharName = styled.div`
   margin-bottom: 10px;
   width: 6.5rem;
+  line-height: 1.1rem;
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 0.85rem;
@@ -316,6 +317,7 @@ const SimilarContainer = styled.div`
   margin: 15px 0;
   width: 100%;
   min-width: 920px;
+  padding:0 3px;
   display: flex;
   align-items: flex-start;
   overflow-x: auto;
@@ -327,7 +329,7 @@ const Similar = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: start;
-  min-width: 14rem;
+  min-width: calc(25% - 8px);
   margin-bottom: 6px;
   color: rgb(255, 255, 255);
   border-radius: 4px;
@@ -353,12 +355,16 @@ const SimilarBackdrop = styled.img`
   border-radius: 4px 4px 0 0;
 `;
 
+const SimilarItems = styled.div`
+  margin: 10px;
+`;
+
 const SimilarTitle = styled.div`
-  margin: 8px 6px;
   line-height: 1.2rem;
   height: 2.4rem;
   text-align: left;
-  font-size: 0.9rem;
+  word-break: keep-all;
+  font-size: 1.1rem;
   font-weight: bold;
   overflow: hidden;
   white-space: normal;
@@ -369,26 +375,20 @@ const SimilarItem = styled.div`
   margin-bottom: 10px;
   text-align: right;
   overflow: hidden;
-  text-overflow: ellipsis;
+  color: rgba(255, 255, 255, 0.8);
   font-size: 0.85rem;
-
-  &:hover {
-    overflow: visible;
-    white-space: normal;
-  }
 `;
 
 const SimilarOverview = styled.div`
-  margin-bottom: 10px;
   line-height: 1.2rem;
   height: 3.6rem;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
   font-size: 0.85rem;
-
-  &:after{
-    content:'...';
-  }
+  color: rgba(255, 255, 255, 0.8);
 `;
 
 
@@ -571,17 +571,20 @@ const DetailPresenter = ({ result, credits, similar, youtube, loading, error }) 
                   <SimilarBackdropWrapper>
                     <SimilarBackdrop src={`https://image.tmdb.org/t/p/w300${item.backdrop_path}`}/>
                   </SimilarBackdropWrapper>
-                  <SimilarTitle>{item.title}</SimilarTitle>
-                  <SimilarItem>
-                    {item.release_date}          
-                    <span role="img" aria-label="rating">
-                      ⭐️
-                    </span>{" "}
-                    {item.vote_average}
-                  </SimilarItem>
-                  <SimilarOverview>
-                    {item.overview}
-                  </SimilarOverview>
+                  <SimilarItems>
+                    <SimilarTitle>{item.title}</SimilarTitle>
+                    <SimilarItem>
+                      {item.release_date.replace(/-/gi,'/')}
+                      <Divider>|</Divider>          
+                      <span role="img" aria-label="rating">
+                        ⭐️
+                      </span>{" "}
+                      {item.vote_average}
+                    </SimilarItem>
+                    <SimilarOverview>
+                      {item.overview}
+                    </SimilarOverview>
+                  </SimilarItems>
                 </SimilarLink>
               </Similar>
             ))}
