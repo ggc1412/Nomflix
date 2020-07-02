@@ -5,7 +5,7 @@ import {
   Redirect,
   Switch,
 } from "react-router-dom";
-// reach router를 Dom으로 쓸 건데 BrowserRouter로 할 거고, 이건 Router랑 Route에 쓸 거야.
+// reach router를 Dom으로 쓸 건데 BrowserRouter로 할 거고, 이건 Router에 쓸 거야.
 import Home from "Routes/Home";
 import TV from "Routes/TV";
 import Search from "Routes/Search";

@@ -470,7 +470,7 @@ const DetailPresenter = ({ result, credits, similar, youtube, isMovie, loading, 
                   )}
               </Item>
             </ItemContainer>
-            <Overview>{result.overview}</Overview>
+            <Overview>{result.overview.length > 0 ? result.overview : '스토리 정보가 없습니다.'}</Overview>
             <Videos>
               {result.videos.results &&
                 result.videos.results.map((video) => (
@@ -562,14 +562,15 @@ const DetailPresenter = ({ result, credits, similar, youtube, isMovie, loading, 
           <SimilarContainer>
             {similar.map(item=>(
               <Similar key={item.id}>
-                <Link to={isMovie ? `/movie/${item.id}` : `/show/${item.id}`}>
+                <Link to={isMovie ? `/show/${item.id}` : `/movie/${item.id}`}>
+                {/* <Link to='/show'> */}
                   <SimilarBackdropWrapper>
                     <SimilarBackdrop src={`https://image.tmdb.org/t/p/w300${item.backdrop_path}`}/>
                   </SimilarBackdropWrapper>
                   <SimilarItems>
-                    <SimilarTitle>{item.title}</SimilarTitle>
+                    <SimilarTitle>{item.title ? item.title : item.name}</SimilarTitle>
                     <SimilarItem>
-                      {item.release_date.replace(/-/gi,'/')}
+                      {item.release_date ? item.release_date.replace(/-/gi,'/') : item.first_air_date.replace(/-/gi,'/')}
                       <Divider>|</Divider>          
                       <span role="img" aria-label="rating">
                         ⭐️
@@ -577,7 +578,7 @@ const DetailPresenter = ({ result, credits, similar, youtube, isMovie, loading, 
                       {item.vote_average}
                     </SimilarItem>
                     <SimilarOverview>
-                      {item.overview}
+                      {item.overview.length > 0 ? item.overview : '스토리 정보가 없습니다.'}
                     </SimilarOverview>
                   </SimilarItems>
                 </Link>
@@ -592,8 +593,8 @@ const DetailPresenter = ({ result, credits, similar, youtube, isMovie, loading, 
 DetailPresenter.propTypes = {
   result: PropTypes.object,
   credits: PropTypes.object,
-  similar: PropTypes.object,
-  youtube: PropTypes.object,
+  similar: PropTypes.array,
+  youtube: PropTypes.array,
   isMovie: PropTypes.bool,
   loading: PropTypes.bool.isRequired,
   error: PropTypes.string,

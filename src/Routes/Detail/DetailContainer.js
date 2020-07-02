@@ -62,6 +62,7 @@ export default class extends React.Component {
       } else {
         ({ data: result } = await tvApi.showDetail(parsedId));
         ({ data: credits } = await tvApi.showCredits(parsedId));
+        ({ data: { results: similar } }= await tvApi.similar(parsedId));
         const title = `${result.name? result.name : result.original_name}`;
         ({
           data: { items: youtube },
@@ -73,7 +74,7 @@ export default class extends React.Component {
     } catch {
       this.setState({ error: "Can't find anything." });
     } finally {
-      console.log(result);
+      console.log(similar);
       this.setState({ loading: false, result, credits, similar, youtube });
     }
   }
