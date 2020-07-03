@@ -37,6 +37,11 @@ export default class extends React.Component {
       },
       history: { push },
     } = this.props;
+    const { match, location, history } = this.props;
+    console.log(match);
+    console.log(location);
+    console.log(history);
+
     const { isMovie } = this.state;
     const parsedId = parseInt(id);
     if (isNaN(parsedId)) {

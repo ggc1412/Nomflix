@@ -562,7 +562,7 @@ const DetailPresenter = ({ result, credits, similar, youtube, isMovie, loading, 
           <SimilarContainer>
             {similar.map(item=>(
               <Similar key={item.id}>
-                <Link to={isMovie ? `/show/${item.id}` : `/movie/${item.id}`}>
+                <Link to={isMovie ? `/movie/${item.id}` : `/show/${item.id}`}>
                 {/* <Link to='/show'> */}
                   <SimilarBackdropWrapper>
                     <SimilarBackdrop src={`https://image.tmdb.org/t/p/w300${item.backdrop_path}`}/>
