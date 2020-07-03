@@ -565,7 +565,7 @@ const DetailPresenter = ({ result, credits, similar, youtube, isMovie, loading, 
                 <Link to={isMovie ? `/movie/${item.id}` : `/show/${item.id}`}>
                 {/* <Link to='/show'> */}
                   <SimilarBackdropWrapper>
-                    <SimilarBackdrop src={`https://image.tmdb.org/t/p/w300${item.backdrop_path}`}/>
+                    <SimilarBackdrop src={item.backdrop_path? `https://image.tmdb.org/t/p/w300${item.backdrop_path}`: require("../../assets/noImage.png")}/>
                   </SimilarBackdropWrapper>
                   <SimilarItems>
                     <SimilarTitle>{item.title ? item.title : item.name}</SimilarTitle>

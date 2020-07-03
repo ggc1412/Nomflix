@@ -33,7 +33,7 @@ Learning React and ES6 by building a Movie Discovery App. Learning React and ES6
 - [ ] 관련 영화 리스트
   - [x] 데이터 노출
   - [ ] 스타일 처리
-  - [ ] 링크 처리
+  - [x] 링크 처리
 - [ ] Redux 적용
 - [ ] Hooks 적용
 - [ ] 모바일 최적화
@@ -47,4 +47,5 @@ Learning React and ES6 by building a Movie Discovery App. Learning React and ES6
 - add figure :deciduous_tree:
 - css :art:
 - issue occurred :space_invader:
+- resolve the issue :sparkles:
 - refactoring :wrench:
