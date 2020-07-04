@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Loader from "Components/Loader";
+import Message from "Components/Message";
 import { Helmet } from "react-helmet";
 
 const Container = styled.div`
@@ -163,8 +164,9 @@ const ProductionName = styled.div`
   }
 `;
 
-const NoProduction = styled.div`
-  font-size: 1.5rem;
+const NoItem = styled.div`
+  font-size: 1.2rem;
+  padding: 10px 5px;
 `;
 
 // Cast Style
@@ -506,7 +508,7 @@ const DetailPresenter = ({ result, credits, similar, youtube, isMovie, loading, 
                 </Production>
               ))
             ) : (
-              <NoProduction>No Production Data</NoProduction>
+              <NoItem>No Production Data</NoItem>
             )}
           </ProductionContainer>
           <ItemTitle>주요 출연진</ItemTitle>
@@ -528,12 +530,12 @@ const DetailPresenter = ({ result, credits, similar, youtube, isMovie, loading, 
                 </Cast>
               ))
             ) : (
-              <NoProduction>No Cast Data</NoProduction>
+              <NoItem>No Cast Data</NoItem>
             )}
           </CastContainer>
           <ItemTitle>YOUTUBE</ItemTitle>
           <YoutubeContainer>
-            {youtube.map(item => (
+            {youtube && youtube.map(item => (
               <Youtube key={item.etag}>
                 <YoutubeLink
                   href={`https://www.youtube.com/watch?v=${item.id.videoId}`}
@@ -546,7 +548,8 @@ const DetailPresenter = ({ result, credits, similar, youtube, isMovie, loading, 
                 </YoutubeLink>
               </Youtube>
             ))}
-             <YoutubeLink href={`https://www.youtube.com/results?search_query=${result.title
+            {youtube ? 
+             (<YoutubeLink href={`https://www.youtube.com/results?search_query=${result.title
                 ? result.title
                 : result.original_title
                 ? result.original_title
@@ -556,11 +559,11 @@ const DetailPresenter = ({ result, credits, similar, youtube, isMovie, loading, 
                <YoutubeMore>
                 더보기
                </YoutubeMore>
-            </YoutubeLink>
+            </YoutubeLink>) : <NoItem>데이터가 없습니다.</NoItem> }
           </YoutubeContainer>
           <ItemTitle>비슷한 작품</ItemTitle>
           <SimilarContainer>
-            {similar.map(item=>(
+            {similar && similar.map(item=>(
               <Similar key={item.id}>
                 <Link to={isMovie ? `/movie/${item.id}` : `/show/${item.id}`}>
                 {/* <Link to='/show'> */}
@@ -586,6 +589,7 @@ const DetailPresenter = ({ result, credits, similar, youtube, isMovie, loading, 
             ))}
           </SimilarContainer>
         </DetailContent>
+        {error && <Message color="#e74c3c" text={error} />}
       </Container>
     </>
   );
