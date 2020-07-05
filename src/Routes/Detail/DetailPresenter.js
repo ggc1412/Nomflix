@@ -116,7 +116,7 @@ const TabPanelContainer = styled.ul`
   padding: 20px 30px;
   width: 100%;
   min-width: 920px;
-  min-height: 8rem;
+  min-height: 8.2rem;
   display: flex;
   align-items: center;
   overflow-x: auto;
@@ -191,6 +191,13 @@ const CrewName = styled.div`
 const JobName = styled.div`
   line-height: 1.1rem;
   font-size: 0.9rem;
+`;
+
+// Homepage Sytle
+const HomepageLink = styled.a`
+  font-size: 1.4rem;
+  font-weight: 700;
+  padding: 10px 20px;
 `;
 
 // Cast Style
@@ -529,7 +536,8 @@ const DetailPresenter = ({
           <Tabs>
             <TabList>
               <Tab>프로덕션</Tab>
-              <Tab>제작진</Tab>
+              {crew && <Tab>제작진</Tab>}
+              {result.homepage && <Tab>홈페이지</Tab>}
             </TabList>
             <TabPanel>
               <TabPanelContainer>
@@ -550,7 +558,7 @@ const DetailPresenter = ({
                     </Production>
                   ))
                 ) : (
-                  <NoItem>No Production Data</NoItem>
+                  <NoItem>프로덕션 정보가 없습니다.</NoItem>
                 )}
               </TabPanelContainer>
             </TabPanel>
@@ -565,6 +573,19 @@ const DetailPresenter = ({
                   ))
                 ) : (
                   <NoItem>제작진 정보가 없습니다.</NoItem>
+                )}
+              </TabPanelContainer>
+            </TabPanel>
+            <TabPanel>
+              <TabPanelContainer>
+                {result.homepage ? (
+                  <li>
+                    <HomepageLink href={result.homepage} target="_blank">
+                      {result.homepage}
+                    </HomepageLink>
+                  </li>
+                ) : (
+                  <NoItem>홈페이지 정보가 없습니다.</NoItem>
                 )}
               </TabPanelContainer>
             </TabPanel>

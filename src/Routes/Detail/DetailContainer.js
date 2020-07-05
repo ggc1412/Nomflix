@@ -78,7 +78,7 @@ export default class extends React.Component {
               item.job === "Writer" ||
               item.department === "Writing")
         );
-        console.log(cast);
+        console.log(result);
       } else {
         ({ data: result } = await tvApi.showDetail(parsedId));
         const {
@@ -94,7 +94,6 @@ export default class extends React.Component {
         youtube.forEach((item) => {
           item.snippet.title = AllHtmlEntities.decode(item.snippet.title);
         });
-        console.log(crew);
         parsedCast = cast.filter((item, index) => index < 10);
         parsedCrew = crew.filter(
           (item, index) =>
