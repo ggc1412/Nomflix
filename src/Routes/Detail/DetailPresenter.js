@@ -110,10 +110,15 @@ const ItemTitle = styled.h2`
   margin-top: 30px;
 `;
 
-// Production Style
+const NoItem = styled.div`
+  font-size: 1.2rem;
+  padding: 10px 5px;
+`;
+
+// Tab Style
 const TabPanelContainer = styled.ul`
   margin: 15px 0;
-  padding: 20px 30px;
+  padding: 0 30px;
   width: 100%;
   min-width: 920px;
   min-height: 8.2rem;
@@ -125,6 +130,7 @@ const TabPanelContainer = styled.ul`
   border-radius: 3px;
 `;
 
+// Production Style
 const Production = styled.li`
   display: flex;
   flex-direction: column;
@@ -167,11 +173,6 @@ const ProductionName = styled.div`
   }
 `;
 
-const NoItem = styled.div`
-  font-size: 1.2rem;
-  padding: 10px 5px;
-`;
-
 // Crew Style
 const Crew = styled.li`
   display: flex;
@@ -198,6 +199,46 @@ const HomepageLink = styled.a`
   font-size: 1.4rem;
   font-weight: 600;
   color: #000;
+`;
+
+// Series Style
+const Series = styled.li`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  & + & {
+    margin-left: 20px;
+  }
+  color: rgb(0, 0, 0);
+`;
+
+const SeriesImgWrapper = styled.div`
+  width: 10rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const SeriesImg = styled.img`
+  width: 100%;
+`;
+
+const SeriesText = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  justify-content: start;
+`;
+
+const SeriesName = styled.h3`
+  margin: 10px;
+  font-size: 1.5rem;
+  font-weight: 600;
+`;
+
+const SeriesLink = styled.a`
+  padding: 10px 20px;
+  background-color: white;
 `;
 
 // Cast Style
@@ -536,10 +577,25 @@ const DetailPresenter = ({
         <DetailContent>
           <Tabs>
             <TabList>
-              <Tab>프로덕션</Tab>
               {crew && <Tab>제작진</Tab>}
+              <Tab>프로덕션</Tab>
               {result.homepage && <Tab>홈페이지</Tab>}
+              {result.belongs_to_collection && <Tab>시리즈</Tab>}
             </TabList>
+            <TabPanel>
+              <TabPanelContainer>
+                {crew && crew.length > 0 ? (
+                  crew.map((item, index) => (
+                    <Crew key={item.credit_id}>
+                      <JobName>{item.job}</JobName>
+                      <CrewName>{item.name}</CrewName>
+                    </Crew>
+                  ))
+                ) : (
+                  <NoItem>제작진 정보가 없습니다.</NoItem>
+                )}
+              </TabPanelContainer>
+            </TabPanel>
             <TabPanel>
               <TabPanelContainer>
                 {result.production_companies &&
@@ -565,20 +621,6 @@ const DetailPresenter = ({
             </TabPanel>
             <TabPanel>
               <TabPanelContainer>
-                {crew && crew.length > 0 ? (
-                  crew.map((item, index) => (
-                    <Crew key={item.credit_id}>
-                      <JobName>{item.job}</JobName>
-                      <CrewName>{item.name}</CrewName>
-                    </Crew>
-                  ))
-                ) : (
-                  <NoItem>제작진 정보가 없습니다.</NoItem>
-                )}
-              </TabPanelContainer>
-            </TabPanel>
-            <TabPanel>
-              <TabPanelContainer>
                 {result.homepage ? (
                   <li>
                     <HomepageLink href={result.homepage} target="_blank">
@@ -587,6 +629,31 @@ const DetailPresenter = ({
                   </li>
                 ) : (
                   <NoItem>홈페이지 정보가 없습니다.</NoItem>
+                )}
+              </TabPanelContainer>
+            </TabPanel>
+            <TabPanel>
+              <TabPanelContainer>
+                {result.belongs_to_collection ? (
+                  <Series>
+                    <SeriesImgWrapper>
+                      <SeriesImg
+                        src={
+                          result.belongs_to_collection.backdrop_path
+                            ? `https://image.tmdb.org/t/p/w300${result.belongs_to_collection.backdrop_path}`
+                            : require("../../assets/noProduction.jpg")
+                        }
+                      />
+                    </SeriesImgWrapper>
+                    <SeriesText>
+                      <SeriesName>
+                        {result.belongs_to_collection.name}
+                      </SeriesName>
+                      <SeriesLink>시리즈 보러가기</SeriesLink>
+                    </SeriesText>
+                  </Series>
+                ) : (
+                  <NoItem>시리즈 정보가 없습니다.</NoItem>
                 )}
               </TabPanelContainer>
             </TabPanel>
