@@ -196,8 +196,8 @@ const JobName = styled.div`
 // Homepage Sytle
 const HomepageLink = styled.a`
   font-size: 1.4rem;
-  font-weight: 700;
-  padding: 10px 20px;
+  font-weight: 600;
+  color: #000;
 `;
 
 // Cast Style
@@ -499,8 +499,9 @@ const DetailPresenter = ({
               </Item>
               <Divider>•</Divider>
               <Item>
-                {result.runtime ? result.runtime : result.episode_run_time[0]}{" "}
-                min
+                {isMovie
+                  ? `${result.runtime} min`
+                  : `에피소드 ${result.number_of_episodes} 개`}
               </Item>
               <Divider>•</Divider>
               <Item>
