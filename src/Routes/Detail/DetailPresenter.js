@@ -91,6 +91,7 @@ const Overview = styled.p`
 // Video style
 const Videos = styled.div`
   font-size: 1rem;
+  line-height: 1.3rem;
   margin-top: 10px;
   max-height: 150px;
   overflow: auto;
@@ -99,8 +100,10 @@ const Videos = styled.div`
 const VideoWrapper = styled.div`
   margin-top: 8px;
 `;
+
 const Video = styled.a``;
 
+// 공통 style
 const ItemTitle = styled.h2`
   font-size: 1.5rem;
   font-weight: bold;
@@ -156,6 +159,7 @@ const ProductionName = styled.div`
   text-align: center;
   font-size: 1rem;
   font-weight: 500;
+  line-height: 1.3rem;
   &:hover {
     overflow: visible;
     white-space: normal;
@@ -188,6 +192,7 @@ const JobName = styled.div`
   line-height: 1.1rem;
   font-size: 0.9rem;
 `;
+
 // Cast Style
 const CastContainer = styled.div`
   margin: 15px 0;

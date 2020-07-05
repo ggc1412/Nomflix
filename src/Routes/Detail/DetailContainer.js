@@ -58,15 +58,15 @@ export default class extends React.Component {
         ({
           data: { results: similar },
         } = await movieApi.similar(parsedId));
-        const title = `movie ${
-          result.title ? result.title : result.original_title
-        }`;
-        ({
-          data: { items: youtube },
-        } = await youtubeApi.search(title));
-        youtube.forEach((item) => {
-          item.snippet.title = AllHtmlEntities.decode(item.snippet.title);
-        });
+        // const title = `movie ${
+        //   result.title ? result.title : result.original_title
+        // }`;
+        // ({
+        //   data: { items: youtube },
+        // } = await youtubeApi.search(title));
+        // youtube.forEach((item) => {
+        //   item.snippet.title = AllHtmlEntities.decode(item.snippet.title);
+        // });
         parsedCast = cast.filter((item, index) => index < 10);
         parsedCrew = crew.filter(
           (item, index) =>
@@ -79,7 +79,6 @@ export default class extends React.Component {
               item.department === "Writing")
         );
         console.log(cast);
-        console.log(crew);
       } else {
         ({ data: result } = await tvApi.showDetail(parsedId));
         const {
