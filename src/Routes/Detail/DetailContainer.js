@@ -7,7 +7,8 @@ import { AllHtmlEntities } from "html-entities";
 export default class extends React.Component {
   state = {
     result: null,
-    credits: null,
+    cast: null,
+    crew: null,
     similar: null,
     youtube: null,
     error: null,
@@ -21,7 +22,8 @@ export default class extends React.Component {
     } = props;
     this.state = {
       result: null,
-      credits: null,
+      cast: null,
+      crew: null,
       similar: null,
       youtube: null,
       error: null,
@@ -37,59 +39,105 @@ export default class extends React.Component {
       },
       history: { push },
     } = this.props;
-    const { match, location, history } = this.props;
-    console.log(match);
-    console.log(location);
-    console.log(history);
-
     const { isMovie } = this.state;
     const parsedId = parseInt(id);
     if (isNaN(parsedId)) {
       return push("/");
     }
     let result = null;
-    let credits = null;
+    let parsedCast = null;
+    let parsedCrew = null;
     let youtube = null;
     let similar = null;
     try {
       if (isMovie) {
         ({ data: result } = await movieApi.movieDetail(parsedId));
-        ({ data: credits } = await movieApi.movieCredits(parsedId));
-        ({ data: { results: similar } }= await movieApi.similar(parsedId));
-        const title = `movie ${result.title? result.title : result.original_title}`;
+        const {
+          data: { cast, crew },
+        } = await movieApi.movieCredits(parsedId);
+        ({
+          data: { results: similar },
+        } = await movieApi.similar(parsedId));
+        const title = `movie ${
+          result.title ? result.title : result.original_title
+        }`;
         ({
           data: { items: youtube },
         } = await youtubeApi.search(title));
         youtube.forEach((item) => {
           item.snippet.title = AllHtmlEntities.decode(item.snippet.title);
         });
-        console.log(similar);
+        parsedCast = cast.filter((item, index) => index < 10);
+        parsedCrew = crew.filter(
+          (item, index) =>
+            index < 30 &&
+            (item.job === "Director" ||
+              item.job === "Screenplay" ||
+              item.job === "Story" ||
+              item.job === "Producer" ||
+              item.job === "Writer" ||
+              item.department === "Writing")
+        );
+        console.log(cast);
+        console.log(crew);
       } else {
         ({ data: result } = await tvApi.showDetail(parsedId));
-        ({ data: credits } = await tvApi.showCredits(parsedId));
-        ({ data: { results: similar } }= await tvApi.similar(parsedId));
-        const title = `${result.name? result.name : result.original_name}`;
+        const {
+          data: { cast, crew },
+        } = await tvApi.showCredits(parsedId);
+        ({
+          data: { results: similar },
+        } = await tvApi.similar(parsedId));
+        const title = `${result.name ? result.name : result.original_name}`;
         ({
           data: { items: youtube },
         } = await youtubeApi.search(title));
         youtube.forEach((item) => {
           item.snippet.title = AllHtmlEntities.decode(item.snippet.title);
         });
+        console.log(crew);
+        parsedCast = cast.filter((item, index) => index < 10);
+        parsedCrew = crew.filter(
+          (item, index) =>
+            index < 30 &&
+            (item.job === "Director" ||
+              item.job === "Screenplay" ||
+              item.job === "Story" ||
+              item.job === "Producer" ||
+              item.job === "Writer" ||
+              item.department === "Writing")
+        );
       }
     } catch {
       this.setState({ error: "Can't find anything." });
     } finally {
-      console.log(similar);
-      this.setState({ loading: false, result, credits, similar, youtube });
+      this.setState({
+        loading: false,
+        result,
+        cast: parsedCast,
+        crew: parsedCrew,
+        similar,
+        youtube,
+      });
     }
   }
 
   render() {
-    const { result, credits, similar, youtube, isMovie, error, loading } = this.state;
+    const {
+      result,
+      cast,
+      crew,
+      similar,
+      youtube,
+      isMovie,
+      error,
+      loading,
+    } = this.state;
     return (
       <DetailPresenter
         result={result}
-        credits={credits}
+        cast={cast}
+        crew={crew}
         similar={similar}
         youtube={youtube}
         isMovie={isMovie}

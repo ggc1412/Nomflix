@@ -5,6 +5,8 @@ import styled from "styled-components";
 import Loader from "Components/Loader";
 import Message from "Components/Message";
 import { Helmet } from "react-helmet";
+import { Tabs, TabList, Tab, TabPanel } from "react-tabs";
+import "../../assets/custom-react-tabs.scss";
 
 const Container = styled.div`
   width: 100%;
@@ -90,7 +92,7 @@ const Overview = styled.p`
 const Videos = styled.div`
   font-size: 1rem;
   margin-top: 10px;
-  height: 150px;
+  max-height: 150px;
   overflow: auto;
 `;
 
@@ -106,26 +108,25 @@ const ItemTitle = styled.h2`
 `;
 
 // Production Style
-const ProductionContainer = styled.div`
+const TabPanelContainer = styled.ul`
   margin: 15px 0;
   padding: 20px 30px;
   width: 100%;
   min-width: 920px;
+  min-height: 8rem;
   display: flex;
   align-items: center;
   overflow-x: auto;
   overflow-y: hidden;
-  font-size: 0.9rem;
   background-color: rgba(255, 255, 255, 0.3);
   border-radius: 3px;
 `;
 
-const Production = styled.div`
+const Production = styled.li`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   width: 6.5rem;
   & + & {
     margin-left: 20px;
@@ -153,10 +154,8 @@ const ProductionName = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
   text-align: center;
-
   font-size: 1rem;
   font-weight: 500;
-
   &:hover {
     overflow: visible;
     white-space: normal;
@@ -169,6 +168,26 @@ const NoItem = styled.div`
   padding: 10px 5px;
 `;
 
+// Crew Style
+const Crew = styled.li`
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  justify-content: start;
+  white-space: nowrap;
+  color: rgb(0, 0, 0);
+  margin-right: 40px;
+`;
+const CrewName = styled.div`
+  text-align: left;
+  font-size: 1rem;
+  font-weight: bold;
+`;
+
+const JobName = styled.div`
+  line-height: 1.1rem;
+  font-size: 0.9rem;
+`;
 // Cast Style
 const CastContainer = styled.div`
   margin: 15px 0;
@@ -196,7 +215,7 @@ const Cast = styled.div`
   & + & {
     margin-left: 10px;
   }
-  &:hover{
+  &:hover {
     filter: brightness(0.5);
   }
 `;
@@ -268,7 +287,7 @@ const Youtube = styled.div`
   & + & {
     margin-left: 10px;
   }
-  &:hover{
+  &:hover {
     filter: brightness(0.5);
   }
 `;
@@ -308,9 +327,9 @@ const YoutubeMore = styled.div`
   padding: 15px;
   height: 10.5rem;
   border-radius: 4px;
-  
+
   margin-left: 5px;
-  &:hover{
+  &:hover {
     background-color: rgba(0, 0, 0, 0.7);
   }
 `;
@@ -320,7 +339,7 @@ const SimilarContainer = styled.div`
   margin: 15px 0;
   width: 100%;
   min-width: 920px;
-  padding:0 3px;
+  padding: 0 3px;
   display: flex;
   align-items: flex-start;
   overflow-x: auto;
@@ -340,7 +359,7 @@ const Similar = styled.div`
   & + & {
     margin-left: 10px;
   }
-  &:hover{
+  &:hover {
     filter: brightness(0.5);
   }
 `;
@@ -405,7 +424,16 @@ const Emoji = (props) => (
   </span>
 );
 
-const DetailPresenter = ({ result, credits, similar, youtube, isMovie, loading, error }) =>
+const DetailPresenter = ({
+  result,
+  cast,
+  crew,
+  similar,
+  youtube,
+  isMovie,
+  loading,
+  error,
+}) =>
   loading ? (
     <>
       <Helmet>
@@ -472,7 +500,11 @@ const DetailPresenter = ({ result, credits, similar, youtube, isMovie, loading, 
                   )}
               </Item>
             </ItemContainer>
-            <Overview>{result.overview.length > 0 ? result.overview : '스토리 정보가 없습니다.'}</Overview>
+            <Overview>
+              {result.overview.length > 0
+                ? result.overview
+                : "스토리 정보가 없습니다."}
+            </Overview>
             <Videos>
               {result.videos.results &&
                 result.videos.results.map((video) => (
@@ -489,32 +521,53 @@ const DetailPresenter = ({ result, credits, similar, youtube, isMovie, loading, 
           </Data>
         </Content>
         <DetailContent>
-          <ItemTitle>프로덕션</ItemTitle>
-          <ProductionContainer>
-            {result.production_companies &&
-            result.production_companies.length > 0 ? (
-              result.production_companies.map((com, index) => (
-                <Production key={com.id}>
-                  <LogoWrapper>
-                    <LogoImg
-                      src={
-                        com.logo_path
-                          ? `https://image.tmdb.org/t/p/w300${com.logo_path}`
-                          : require("../../assets/noProduction.jpg")
-                      }
-                    />
-                  </LogoWrapper>
-                  <ProductionName>{com.name}</ProductionName>
-                </Production>
-              ))
-            ) : (
-              <NoItem>No Production Data</NoItem>
-            )}
-          </ProductionContainer>
+          <Tabs>
+            <TabList>
+              <Tab>프로덕션</Tab>
+              <Tab>제작진</Tab>
+            </TabList>
+            <TabPanel>
+              <TabPanelContainer>
+                {result.production_companies &&
+                result.production_companies.length > 0 ? (
+                  result.production_companies.map((com, index) => (
+                    <Production key={com.id}>
+                      <LogoWrapper>
+                        <LogoImg
+                          src={
+                            com.logo_path
+                              ? `https://image.tmdb.org/t/p/w300${com.logo_path}`
+                              : require("../../assets/noProduction.jpg")
+                          }
+                        />
+                      </LogoWrapper>
+                      <ProductionName>{com.name}</ProductionName>
+                    </Production>
+                  ))
+                ) : (
+                  <NoItem>No Production Data</NoItem>
+                )}
+              </TabPanelContainer>
+            </TabPanel>
+            <TabPanel>
+              <TabPanelContainer>
+                {crew && crew.length > 0 ? (
+                  crew.map((item, index) => (
+                    <Crew key={item.credit_id}>
+                      <JobName>{item.job}</JobName>
+                      <CrewName>{item.name}</CrewName>
+                    </Crew>
+                  ))
+                ) : (
+                  <NoItem>제작진 정보가 없습니다.</NoItem>
+                )}
+              </TabPanelContainer>
+            </TabPanel>
+          </Tabs>
           <ItemTitle>주요 출연진</ItemTitle>
           <CastContainer>
-            {credits.cast && credits.cast.length > 0 ? (
-              credits.cast.map((char, index) => (
+            {cast && cast.length > 0 ? (
+              cast.map((char, index) => (
                 <Cast key={char.credit_id}>
                   <ProfileWrapper>
                     <ProfileImg
@@ -530,63 +583,83 @@ const DetailPresenter = ({ result, credits, similar, youtube, isMovie, loading, 
                 </Cast>
               ))
             ) : (
-              <NoItem>No Cast Data</NoItem>
+              <NoItem>출연진 정보가 없습니다.</NoItem>
             )}
           </CastContainer>
           <ItemTitle>YOUTUBE</ItemTitle>
           <YoutubeContainer>
-            {youtube && youtube.map(item => (
-              <Youtube key={item.etag}>
-                <YoutubeLink
-                  href={`https://www.youtube.com/watch?v=${item.id.videoId}`}
-                  target="_blank"
-                >
-                  <ThumnailWrapper>
-                    <Thumnail src={item.snippet.thumbnails.medium.url} />
-                  </ThumnailWrapper>
-                  <YoutubeTitle>{item.snippet.title}</YoutubeTitle>
-                </YoutubeLink>
-              </Youtube>
-            ))}
-            {youtube ? 
-             (<YoutubeLink href={`https://www.youtube.com/results?search_query=${result.title
-                ? result.title
-                : result.original_title
-                ? result.original_title
-                : result.name
-                ? result.name
-                : result.original_name}`} target="_blank">
-               <YoutubeMore>
-                더보기
-               </YoutubeMore>
-            </YoutubeLink>) : <NoItem>데이터가 없습니다.</NoItem> }
+            {youtube &&
+              youtube.map((item) => (
+                <Youtube key={item.etag}>
+                  <YoutubeLink
+                    href={`https://www.youtube.com/watch?v=${item.id.videoId}`}
+                    target="_blank"
+                  >
+                    <ThumnailWrapper>
+                      <Thumnail src={item.snippet.thumbnails.medium.url} />
+                    </ThumnailWrapper>
+                    <YoutubeTitle>{item.snippet.title}</YoutubeTitle>
+                  </YoutubeLink>
+                </Youtube>
+              ))}
+            {youtube ? (
+              <YoutubeLink
+                href={`https://www.youtube.com/results?search_query=${
+                  result.title
+                    ? result.title
+                    : result.original_title
+                    ? result.original_title
+                    : result.name
+                    ? result.name
+                    : result.original_name
+                }`}
+                target="_blank"
+              >
+                <YoutubeMore>더보기</YoutubeMore>
+              </YoutubeLink>
+            ) : (
+              <NoItem>데이터가 없습니다.</NoItem>
+            )}
           </YoutubeContainer>
           <ItemTitle>비슷한 작품</ItemTitle>
           <SimilarContainer>
-            {similar && similar.map(item=>(
-              <Similar key={item.id}>
-                <Link to={isMovie ? `/movie/${item.id}` : `/show/${item.id}`}>
-                {/* <Link to='/show'> */}
-                  <SimilarBackdropWrapper>
-                    <SimilarBackdrop src={item.backdrop_path? `https://image.tmdb.org/t/p/w300${item.backdrop_path}`: require("../../assets/noImage.png")}/>
-                  </SimilarBackdropWrapper>
-                  <SimilarItems>
-                    <SimilarTitle>{item.title ? item.title : item.name}</SimilarTitle>
-                    <SimilarItem>
-                      {item.release_date ? item.release_date.replace(/-/gi,'/') : item.first_air_date.replace(/-/gi,'/')}
-                      <Divider>|</Divider>          
-                      <span role="img" aria-label="rating">
-                        ⭐️
-                      </span>{" "}
-                      {item.vote_average}
-                    </SimilarItem>
-                    <SimilarOverview>
-                      {item.overview.length > 0 ? item.overview : '스토리 정보가 없습니다.'}
-                    </SimilarOverview>
-                  </SimilarItems>
-                </Link>
-              </Similar>
-            ))}
+            {similar &&
+              similar.map((item) => (
+                <Similar key={item.id}>
+                  <Link to={isMovie ? `/movie/${item.id}` : `/show/${item.id}`}>
+                    {/* <Link to='/show'> */}
+                    <SimilarBackdropWrapper>
+                      <SimilarBackdrop
+                        src={
+                          item.backdrop_path
+                            ? `https://image.tmdb.org/t/p/w300${item.backdrop_path}`
+                            : require("../../assets/noImage.png")
+                        }
+                      />
+                    </SimilarBackdropWrapper>
+                    <SimilarItems>
+                      <SimilarTitle>
+                        {item.title ? item.title : item.name}
+                      </SimilarTitle>
+                      <SimilarItem>
+                        {item.release_date
+                          ? item.release_date.replace(/-/gi, "/")
+                          : item.first_air_date.replace(/-/gi, "/")}
+                        <Divider>|</Divider>
+                        <span role="img" aria-label="rating">
+                          ⭐️
+                        </span>{" "}
+                        {item.vote_average}
+                      </SimilarItem>
+                      <SimilarOverview>
+                        {item.overview.length > 0
+                          ? item.overview
+                          : "스토리 정보가 없습니다."}
+                      </SimilarOverview>
+                    </SimilarItems>
+                  </Link>
+                </Similar>
+              ))}
           </SimilarContainer>
         </DetailContent>
         {error && <Message color="#e74c3c" text={error} />}
