@@ -206,6 +206,7 @@ const Series = styled.li`
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 6rem;
   & + & {
     margin-left: 20px;
   }
@@ -213,14 +214,15 @@ const Series = styled.li`
 `;
 
 const SeriesImgWrapper = styled.div`
-  width: 10rem;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
 const SeriesImg = styled.img`
-  width: 100%;
+  height: 100%;
+  border-radius: 4px;
 `;
 
 const SeriesText = styled.div`
@@ -228,17 +230,23 @@ const SeriesText = styled.div`
   flex-direction: column;
   align-items: baseline;
   justify-content: start;
+  height: 100%;
+  margin-left: 10px;
 `;
 
 const SeriesName = styled.h3`
-  margin: 10px;
+  margin: 6px 0 12px 0;
   font-size: 1.5rem;
   font-weight: 600;
 `;
 
 const SeriesLink = styled.a`
-  padding: 10px 20px;
+  padding: 10px 12px;
   background-color: white;
+  border-radius: 4px;
+  &:hover {
+    filter: brightness(0.5);
+  }
 `;
 
 // Cast Style
@@ -649,7 +657,12 @@ const DetailPresenter = ({
                       <SeriesName>
                         {result.belongs_to_collection.name}
                       </SeriesName>
-                      <SeriesLink>시리즈 보러가기</SeriesLink>
+                      <SeriesLink
+                        href={`https://www.themoviedb.org/collection/${result.belongs_to_collection.id}`}
+                        target="_blank"
+                      >
+                        시리즈 보러가기
+                      </SeriesLink>
                     </SeriesText>
                   </Series>
                 ) : (
