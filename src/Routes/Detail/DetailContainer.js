@@ -13,6 +13,7 @@ export default class extends React.Component {
     youtube: null,
     error: null,
     loading: true,
+    modalVisible: false
   };
 
   constructor(props) {
@@ -31,6 +32,19 @@ export default class extends React.Component {
       isMovie: pathname.includes("/movie/"),
     };
   }
+
+  openModal = () => {
+    this.setState({
+      modalVisible: true
+    });
+  }
+
+  closeModal = () => {
+    this.setState({
+      modalVisible: false
+    })
+  }
+
 
   async componentDidMount() {
     const {
@@ -139,7 +153,9 @@ export default class extends React.Component {
       isMovie,
       error,
       loading,
+      modalVisible
     } = this.state;
+    const { openModal, closeModal } = this;
     return (
       <DetailPresenter
         result={result}
@@ -150,6 +166,9 @@ export default class extends React.Component {
         isMovie={isMovie}
         error={error}
         loading={loading}
+        modalVisible={modalVisible}
+        openModal={openModal}
+        closeModal={closeModal}
       />
     );
   }

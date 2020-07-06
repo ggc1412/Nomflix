@@ -308,7 +308,52 @@ const SeasonImgWrapper = styled.div`
   }
 `;
 
+// Modal Style
+const SeasonModalPosterWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
+const SeasonModalPoster = styled.img`
+  width: 100%;
+`;
+
+const SeasonModalItems = styled.div`
+  margin: 10px;
+`;
+
+const SeasonModalTitle = styled.div`
+  line-height: 1.2rem;
+  height: 2.4rem;
+  text-align: left;
+  word-break: keep-all;
+  font-size: 1.1rem;
+  font-weight: bold;
+  overflow: hidden;
+  white-space: normal;
+  text-overflow: ellipsis;
+`;
+
+const SeasonModalItem = styled.div`
+  margin-bottom: 10px;
+  text-align: right;
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.85rem;
+`;
+
+const SeasonModalOverview = styled.div`
+  line-height: 1.2rem;
+  height: 3.6rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+`;
 
 // Cast Style
 const CastContainer = styled.div`
@@ -556,6 +601,9 @@ const DetailPresenter = ({
   isMovie,
   loading,
   error,
+  modalVisible,
+  openModal,
+  closeModal
 }) =>
   loading ? (
     <>
@@ -735,20 +783,52 @@ const DetailPresenter = ({
             {result.seasons && <TabPanel>
               <TabPanelContainer>
                 {result.seasons ? (
-                  result.seasons.map(season => 
-                  <Seasons key={season.id}>
-                    {/* <Modal visible={true}/> */}
-                    <SeasonImgWrapper>
-                      <SeasonImg
-                        src={
-                          season.poster_path
-                            ? `https://image.tmdb.org/t/p/w300${season.poster_path}`
-                            : require("../../assets/noPosterSmall.png")
-                        }
-                      />
-                      <SeasonName>{season.name}</SeasonName>  
-                    </SeasonImgWrapper>
-                  </Seasons>)
+                  result.seasons.map((season, index) =>
+                    <Seasons key={season.id}>
+                      <SeasonImgWrapper onClick={openModal}>
+                        <SeasonImg
+                          src={
+                            season.poster_path
+                              ? `https://image.tmdb.org/t/p/w300${season.poster_path}`
+                              : require("../../assets/noPosterSmall.png")
+                          }
+                        />
+                        <SeasonName>{season.name}</SeasonName>  
+                      </SeasonImgWrapper>
+                      {
+                      modalVisible && 
+                      <Modal key={index} visible={modalVisible} onClose={closeModal}>
+                        <SeasonModalPosterWrapper>
+                          <SeasonModalPoster
+                            src={
+                              season.poster_path
+                                ? `https://image.tmdb.org/t/p/w300${season.poster_path}`
+                                : require("../../assets/noImage.png")
+                            }
+                          />
+                        </SeasonModalPosterWrapper>
+                        <SeasonModalItems>
+                          <SeasonModalTitle>
+                          {result.name
+                            ? result.name
+                            : result.original_name}{" "}{season.name}
+                          </SeasonModalTitle>
+                          <SeasonModalItem>
+                            {season.air_date &&
+                              season.air_date.replace(/-/gi, "/")}
+                            <Divider>|</Divider>
+                            {`에피소드 ${season.episode_count} 개`}
+                          </SeasonModalItem>
+                          <SeasonModalOverview>
+                            {season.overview.length > 0
+                              ? season.overview
+                              : "스토리 정보가 없습니다."}
+                          </SeasonModalOverview>
+                        </SeasonModalItems>
+                      </Modal>
+                      }                      
+                    </Seasons>
+                  )
                 ) : (
                   <NoItem>시즌 정보가 없습니다.</NoItem>
                 )}
@@ -820,7 +900,6 @@ const DetailPresenter = ({
               similar.map((item) => (
                 <Similar key={item.id}>
                   <Link to={isMovie ? `/movie/${item.id}` : `/show/${item.id}`}>
-                    {/* <Link to='/show'> */}
                     <SimilarBackdropWrapper>
                       <SimilarBackdrop
                         src={
