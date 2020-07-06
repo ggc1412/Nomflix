@@ -34,6 +34,9 @@ Learning React and ES6 by building a Movie Discovery App. Learning React and ES6
   - [x] 데이터 노출
   - [x] 스타일 처리
   - [x] 링크 처리
+- [ ] 시즌 정보 처리
+  - [x] 탭 데이터 노출
+  - [ ] 모달 처리
 - [ ] Redux 적용
 - [ ] Hooks 적용
 - [ ] 모바일 최적화

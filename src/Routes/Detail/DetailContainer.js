@@ -79,6 +79,9 @@ export default class extends React.Component {
               item.department === "Writing")
         );
         console.log(result);
+        if(parsedCrew.length === 0){
+          parsedCrew = crew;
+        }
       } else {
         ({ data: result } = await tvApi.showDetail(parsedId));
         const {
@@ -107,6 +110,9 @@ export default class extends React.Component {
         );
         console.log(result);
         console.log(crew);
+        if(parsedCrew.length === 0){
+          parsedCrew = crew;
+        }
       }
     } catch {
       this.setState({ error: "Can't find anything." });

@@ -49,6 +49,7 @@ const Cover = styled.div`
 const CoverImg = styled.img`
   width: 100%;
   height: 100%;
+  border-radius: 4px;
 `;
 
 const Data = styled.div`
@@ -267,6 +268,7 @@ const Seasons = styled.li`
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
   height: 12rem;
   margin: 25px 0;
   & + & {
