@@ -106,6 +106,7 @@ export default class extends React.Component {
               item.department === "Writing")
         );
         console.log(result);
+        console.log(crew);
       }
     } catch {
       this.setState({ error: "Can't find anything." });

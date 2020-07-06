@@ -110,11 +110,22 @@ const ItemTitle = styled.h2`
   margin-top: 30px;
 `;
 
+const NoItemContainer = styled.div`
+  padding: 0 30px;
+  width: 100%;
+  min-width: 920px;
+  min-height: 7rem;
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+`;
+
 const NoItem = styled.div`
   font-size: 1.2rem;
   font-weight: 600;
   padding: 10px 5px;
-  color: #000;
+  color: rgba(0, 0, 0, 0.7);
 `;
 
 // Tab Style
@@ -250,6 +261,50 @@ const SeriesLink = styled.a`
     filter: brightness(0.5);
   }
 `;
+
+// Seasons Style
+const Seasons = styled.li`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 12rem;
+  margin: 25px 0;
+  & + & {
+    margin-left: 20px;
+  }
+  color: rgb(0, 0, 0);
+  `;
+  
+const SeasonImg = styled.img`
+    height: 100%;
+    border-radius: 4px;
+  `;
+  
+const SeasonName = styled.span`
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.1s linear;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 600;
+  `;
+  
+const SeasonImgWrapper = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover{
+    ${SeasonImg}{
+      filter: brightness(0.5);
+    }
+    ${SeasonName}{
+      opacity: 1;
+    }
+  }
+`;
+
+
 
 // Cast Style
 const CastContainer = styled.div`
@@ -553,7 +608,7 @@ const DetailPresenter = ({
               <Item>
                 {isMovie
                   ? `${result.runtime} min`
-                  : `에피소드 ${result.number_of_episodes}개`}
+                  : `에피소드 ${result.number_of_episodes} 개`}
               </Item>
               <Divider>•</Divider>
               <Item>
@@ -592,6 +647,7 @@ const DetailPresenter = ({
               {result.production_companies &&<Tab>프로덕션</Tab>}
               {result.homepage && <Tab>홈페이지</Tab>}
               {result.belongs_to_collection && <Tab>시리즈</Tab>}
+              {result.seasons && <Tab>시즌</Tab>}
             </TabList>
             {crew && <TabPanel>
               <TabPanelContainer>
@@ -672,6 +728,27 @@ const DetailPresenter = ({
                 )}
               </TabPanelContainer>
             </TabPanel>}
+            {result.seasons && <TabPanel>
+              <TabPanelContainer>
+                {result.seasons ? (
+                  result.seasons.map(season => 
+                  <Seasons key={season.id}>
+                    <SeasonImgWrapper>
+                      <SeasonImg
+                        src={
+                          season.poster_path
+                            ? `https://image.tmdb.org/t/p/w300${season.poster_path}`
+                            : require("../../assets/noPosterSmall.png")
+                        }
+                      />
+                      <SeasonName>{season.name}</SeasonName>  
+                    </SeasonImgWrapper>
+                  </Seasons>)
+                ) : (
+                  <NoItem>시즌 정보가 없습니다.</NoItem>
+                )}
+              </TabPanelContainer>
+            </TabPanel>}
           </Tabs>
           <ItemTitle>주요 출연진</ItemTitle>
           <CastContainer>
@@ -727,7 +804,9 @@ const DetailPresenter = ({
                 <YoutubeMore>더보기</YoutubeMore>
               </YoutubeLink>
             ) : (
-              <NoItem>데이터가 없습니다.</NoItem>
+              <NoItemContainer>
+                <NoItem>데이터가 없습니다.</NoItem>
+              </NoItemContainer> 
             )}
           </YoutubeContainer>
           <ItemTitle>비슷한 작품</ItemTitle>
