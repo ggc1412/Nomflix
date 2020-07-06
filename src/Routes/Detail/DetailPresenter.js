@@ -6,10 +6,11 @@ import Loader from "Components/Loader";
 import Message from "Components/Message";
 import { Helmet } from "react-helmet";
 import { Tabs, TabList, Tab, TabPanel } from "react-tabs";
+import Modal from "../../Components/Modal";
 import "../../assets/custom-react-tabs.scss";
 
 const Container = styled.div`
-  width: 100%;
+  width: calc(100vw - 17px);
   position: relative;
   padding: 50px;
   display: flex;
@@ -19,11 +20,11 @@ const Container = styled.div`
 `;
 
 const Backdrop = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
+  right: 0;
+  bottom: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
   background-image: url(${(props) => props.bgImage});
   background-position: center center;
   background-size: cover;
@@ -50,6 +51,7 @@ const CoverImg = styled.img`
   width: 100%;
   height: 100%;
   border-radius: 4px;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
 `;
 
 const Data = styled.div`
@@ -735,6 +737,7 @@ const DetailPresenter = ({
                 {result.seasons ? (
                   result.seasons.map(season => 
                   <Seasons key={season.id}>
+                    {/* <Modal visible={true}/> */}
                     <SeasonImgWrapper>
                       <SeasonImg
                         src={
