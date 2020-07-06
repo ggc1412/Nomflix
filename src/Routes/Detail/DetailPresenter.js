@@ -112,7 +112,9 @@ const ItemTitle = styled.h2`
 
 const NoItem = styled.div`
   font-size: 1.2rem;
+  font-weight: 600;
   padding: 10px 5px;
+  color: #000;
 `;
 
 // Tab Style
@@ -412,6 +414,7 @@ const Similar = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: start;
+  width: calc(25% - 8px);
   min-width: calc(25% - 8px);
   margin-bottom: 6px;
   color: rgb(255, 255, 255);
@@ -550,7 +553,7 @@ const DetailPresenter = ({
               <Item>
                 {isMovie
                   ? `${result.runtime} min`
-                  : `에피소드 ${result.number_of_episodes} 개`}
+                  : `에피소드 ${result.number_of_episodes}개`}
               </Item>
               <Divider>•</Divider>
               <Item>
@@ -586,13 +589,13 @@ const DetailPresenter = ({
           <Tabs>
             <TabList>
               {crew && <Tab>제작진</Tab>}
-              <Tab>프로덕션</Tab>
+              {result.production_companies &&<Tab>프로덕션</Tab>}
               {result.homepage && <Tab>홈페이지</Tab>}
               {result.belongs_to_collection && <Tab>시리즈</Tab>}
             </TabList>
-            <TabPanel>
+            {crew && <TabPanel>
               <TabPanelContainer>
-                {crew && crew.length > 0 ? (
+                {crew.length > 0 ? (
                   crew.map((item, index) => (
                     <Crew key={item.credit_id}>
                       <JobName>{item.job}</JobName>
@@ -603,11 +606,10 @@ const DetailPresenter = ({
                   <NoItem>제작진 정보가 없습니다.</NoItem>
                 )}
               </TabPanelContainer>
-            </TabPanel>
-            <TabPanel>
+            </TabPanel>}
+            {result.production_companies && <TabPanel>
               <TabPanelContainer>
-                {result.production_companies &&
-                result.production_companies.length > 0 ? (
+                {result.production_companies.length > 0 ? (
                   result.production_companies.map((com, index) => (
                     <Production key={com.id}>
                       <LogoWrapper>
@@ -626,8 +628,8 @@ const DetailPresenter = ({
                   <NoItem>프로덕션 정보가 없습니다.</NoItem>
                 )}
               </TabPanelContainer>
-            </TabPanel>
-            <TabPanel>
+            </TabPanel>}
+            {result.homepage && <TabPanel>
               <TabPanelContainer>
                 {result.homepage ? (
                   <li>
@@ -639,8 +641,8 @@ const DetailPresenter = ({
                   <NoItem>홈페이지 정보가 없습니다.</NoItem>
                 )}
               </TabPanelContainer>
-            </TabPanel>
-            <TabPanel>
+            </TabPanel>}
+            {result.belongs_to_collection && <TabPanel>
               <TabPanelContainer>
                 {result.belongs_to_collection ? (
                   <Series>
@@ -669,7 +671,7 @@ const DetailPresenter = ({
                   <NoItem>시리즈 정보가 없습니다.</NoItem>
                 )}
               </TabPanelContainer>
-            </TabPanel>
+            </TabPanel>}
           </Tabs>
           <ItemTitle>주요 출연진</ItemTitle>
           <CastContainer>
