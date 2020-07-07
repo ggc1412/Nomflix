@@ -298,6 +298,7 @@ const SeasonImgWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
   &:hover{
     ${SeasonImg}{
       filter: brightness(0.5);
@@ -785,7 +786,7 @@ const DetailPresenter = ({
                 {result.seasons ? (
                   result.seasons.map((season, index) =>
                     <Seasons key={season.id}>
-                      <SeasonImgWrapper onClick={openModal}>
+                      <SeasonImgWrapper id={index} onClick={openModal}>
                         <SeasonImg
                           src={
                             season.poster_path
@@ -795,9 +796,9 @@ const DetailPresenter = ({
                         />
                         <SeasonName>{season.name}</SeasonName>  
                       </SeasonImgWrapper>
-                      {
+                      {      
                       modalVisible && 
-                      <Modal key={index} visible={modalVisible} onClose={closeModal}>
+                      <Modal index={index} visible={modalVisible[index].visible} onClose={closeModal}>
                         <SeasonModalPosterWrapper>
                           <SeasonModalPoster
                             src={

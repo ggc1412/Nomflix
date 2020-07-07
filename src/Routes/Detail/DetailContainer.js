@@ -13,7 +13,7 @@ export default class extends React.Component {
     youtube: null,
     error: null,
     loading: true,
-    modalVisible: false
+    modalVisible: null
   };
 
   constructor(props) {
@@ -33,18 +33,39 @@ export default class extends React.Component {
     };
   }
 
-  openModal = () => {
+  openModal = (e) => {
+    const { modalVisible } = this.state;
+    const index = e.currentTarget.id;
+    const selected = modalVisible[index];
+    
+    const nextModalVisible = [...modalVisible];
+
+    nextModalVisible[index] = {
+      ...selected,
+      visible: true
+    };
+
     this.setState({
-      modalVisible: true
+      modalVisible: nextModalVisible
     });
   }
 
-  closeModal = () => {
-    this.setState({
-      modalVisible: false
-    })
-  }
+  closeModal = (e) => {
+    const { modalVisible } = this.state;
+    const index = e.currentTarget.id;
+    const selected = modalVisible[index];
+    
+    const nextModalVisible = [...modalVisible];
 
+    nextModalVisible[index] = {
+      ...selected,
+      visible: false
+    };
+
+    this.setState({
+      modalVisible: nextModalVisible
+    });
+  }
 
   async componentDidMount() {
     const {
@@ -63,6 +84,7 @@ export default class extends React.Component {
     let parsedCrew = null;
     let youtube = null;
     let similar = null;
+    let seasonVisible = [];
     try {
       if (isMovie) {
         ({ data: result } = await movieApi.movieDetail(parsedId));
@@ -92,7 +114,6 @@ export default class extends React.Component {
               item.job === "Writer" ||
               item.department === "Writing")
         );
-        console.log(result);
         if(parsedCrew.length === 0){
           parsedCrew = crew;
         }
@@ -122,8 +143,11 @@ export default class extends React.Component {
               item.job === "Writer" ||
               item.department === "Writing")
         );
-        console.log(result);
-        console.log(crew);
+        if(result.seasons){
+          result.seasons.forEach(season => {
+            seasonVisible.push({id: season.id, visible: false});
+          });
+        }
         if(parsedCrew.length === 0){
           parsedCrew = crew;
         }
@@ -139,6 +163,7 @@ export default class extends React.Component {
         crew: parsedCrew,
         similar,
         youtube,
+        modalVisible: seasonVisible
       });
     }
   }

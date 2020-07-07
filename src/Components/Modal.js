@@ -50,20 +50,20 @@ const CloseButton = styled.span`
 `;
 
 
-const Modal = ({ visible, onClose, children }) => {
+const Modal = ({ index, visible, onClose, children }) => {
     
     const onMaskClick = (e) => {
         if(e.target === e.currentTarget){
-            onClose();
+            onClose(e);
         }       
     }
 
     return (
     <>
         <ModalOverlay visible={visible}/>
-        <ModalWrapper visible={visible} tabIndex="-1" onClick={onMaskClick}>
+        <ModalWrapper id={index} visible={visible} tabIndex="-1" onClick={onMaskClick}>
             <ModalInner tabIndex="0" >
-                <CloseButton onClick={onClose}>x</CloseButton>
+                <CloseButton id={index} onClick={onClose}>x</CloseButton>
                 {children}
             </ModalInner>
         </ModalWrapper>
