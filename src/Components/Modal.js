@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
@@ -27,25 +27,28 @@ const ModalWrapper = styled.div`
 
 const ModalInner = styled.div`
     position: relative;
+    width: 50%;
+    max-width: 800px;
+    min-width: 700px;
     box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
     background-color: rgba(0, 0, 0, 1);
     color: #fff;
     border-radius: 4px;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: start;
     top: 50%;
     transform: translateY(-50%);
     margin: 0 auto;
-    padding: 40px 20px;
+    padding: 25px;
     outline: 0;
 `;
 
 const CloseButton = styled.span`
     position: absolute;
-    top: 5px;
-    right: 5px;
-    font-size: 1rem;
+    top: 3px;
+    right: 15px;
+    font-size: 2rem;
     cursor: pointer;
 `;
 
@@ -57,6 +60,15 @@ const Modal = ({ index, visible, onClose, children }) => {
             onClose(e);
         }       
     }
+
+    // useEffect(() => {
+    //     document.body.style.cssText = `position: fixed; top: -${window.scrollY}px`
+    //   return () => {
+    //     const scrollY = document.body.style.top
+    //     document.body.style.cssText = `position: ""; top: "";`
+    //     window.scrollTo(0, parseInt(scrollY || '0') * -1)
+    //   }
+    // }, [])
 
     return (
     <>

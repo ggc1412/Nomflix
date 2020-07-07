@@ -312,8 +312,9 @@ const SeasonImgWrapper = styled.div`
 // Modal Style
 const SeasonModalPosterWrapper = styled.div`
   display: flex;
-  align-items: center;
+  align-items: start;
   justify-content: center;
+  flex: 1;
 `;
 
 const SeasonModalPoster = styled.img`
@@ -321,7 +322,8 @@ const SeasonModalPoster = styled.img`
 `;
 
 const SeasonModalItems = styled.div`
-  margin: 10px;
+  margin: 10px 10px 10px 20px;
+  flex: 1;
 `;
 
 const SeasonModalTitle = styled.div`
@@ -334,10 +336,11 @@ const SeasonModalTitle = styled.div`
   overflow: hidden;
   white-space: normal;
   text-overflow: ellipsis;
+  margin-bottom: 5px;
 `;
 
 const SeasonModalItem = styled.div`
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   text-align: right;
   overflow: hidden;
   color: rgba(255, 255, 255, 0.8);
@@ -346,12 +349,12 @@ const SeasonModalItem = styled.div`
 
 const SeasonModalOverview = styled.div`
   line-height: 1.2rem;
-  height: 3.6rem;
+  height: 24rem;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 20;
   font-size: 0.85rem;
   color: rgba(255, 255, 255, 0.8);
 `;
@@ -817,7 +820,7 @@ const DetailPresenter = ({
                           <SeasonModalItem>
                             {season.air_date &&
                               season.air_date.replace(/-/gi, "/")}
-                            <Divider>|</Divider>
+                            <Divider>•</Divider>
                             {`에피소드 ${season.episode_count} 개`}
                           </SeasonModalItem>
                           <SeasonModalOverview>
